@@ -1,4 +1,4 @@
-package com.umc.DutchTogether.Root;
+package com.umc.DutchTogether.root;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
