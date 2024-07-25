@@ -1,4 +1,4 @@
-package com.umc.DutchTogether.config;
+package com.umc.DutchTogether.global.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
