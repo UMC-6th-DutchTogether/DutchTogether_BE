@@ -22,4 +22,9 @@ public class Payer extends BaseEntity {
 
     @Column(length = 20)
     private String name;
+
+    private Long accountNum;
+
+    @Column(length = 10)
+    private String bank;
 }

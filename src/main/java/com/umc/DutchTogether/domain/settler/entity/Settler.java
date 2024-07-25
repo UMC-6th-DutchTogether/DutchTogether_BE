@@ -20,4 +20,8 @@ public class Settler extends BaseEntity {
     private Long id;
 
     @OneToMany(mappedBy = "settler", cascade = CascadeType.ALL)
-    private List<SettlementSettler> settlementSettlers = new ArrayList<>();}
+    private List<SettlementSettler> settlementSettlers = new ArrayList<>();
+
+    @Column(length = 20)
+    private String name;
+}

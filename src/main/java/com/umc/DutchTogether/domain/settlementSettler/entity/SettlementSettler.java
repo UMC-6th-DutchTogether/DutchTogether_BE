@@ -22,7 +22,7 @@ public class SettlementSettler extends BaseEntity {
     private Settlement settlement;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "setter_id")
+    @JoinColumn(name= "settler_id")
     private Settler settler;
 
     @Enumerated(EnumType.STRING)
