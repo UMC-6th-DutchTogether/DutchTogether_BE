@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/api/meetings")
-public class SingleMeetingController {
+public class MeetingController {
     private final MeetingService meetingService;
 
-    public SingleMeetingController(MeetingService meetingService) {
+    public MeetingController(MeetingService meetingService) {
         this.meetingService = meetingService;
     }
 
