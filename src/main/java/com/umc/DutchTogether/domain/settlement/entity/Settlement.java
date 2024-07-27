@@ -33,13 +33,17 @@ public class Settlement extends BaseEntity {
     @OneToOne(mappedBy = "settlement",  cascade = CascadeType.ALL)
     private SettlementStatus settlementStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payer_id")
     private Payer payer;
 
     private String items;
 
     private int numPeople;
+
+    @Column(name = "total_amount", nullable = false)
+    private int totalAmount;
+
 
     //타입 같이 정한 후 영수증 추가해야함 !
 

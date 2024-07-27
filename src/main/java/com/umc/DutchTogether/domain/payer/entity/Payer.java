@@ -5,6 +5,9 @@ import com.umc.DutchTogether.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -17,8 +20,8 @@ public class Payer extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "payer",fetch = FetchType.LAZY)
-    private Settlement settlement;
+    @OneToMany(mappedBy = "payer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Settlement> settlements = new ArrayList<>();
 
     @Column(length = 20)
     private String name;
