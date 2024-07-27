@@ -25,12 +25,13 @@ public class MeetingService {
     // Meeting 데이터 저장
     @Transactional
     public MeetingCreateResponseDto createMeeting(MeetingCreateRequestDto request) {
-        Meeting.builder().name(request.getMeetingName());
+        Meeting.MeetingBuilder meetingBuilder = Meeting.builder().name(request.getMeetingName());
         if(request.getMeeting_id() != null){
             Meeting.builder().meetingId(request.getMeeting_id());
             Meeting.builder().password(request.getPassword());
         }
-        Meeting meeting = meetingRepository.save(Meeting.builder().build());
+
+        Meeting meeting = meetingBuilder.build();
 
         // Meeting 저장
         Meeting savedMeeting = meetingRepository.save(meeting);
