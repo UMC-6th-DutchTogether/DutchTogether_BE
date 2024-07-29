@@ -28,13 +28,16 @@ public class SingleSettlementController {
     public SingleSettlementCreateResponseDto createSingleSettlement(@RequestBody SingleSettlementCreateRequestDto request) {
         SingleSettlementCreateResponseDto settlement = settlementService.createSettlement(request);
 
-        log.info("settlement created: {}", settlement.toString());
+        log.info("생성된 정산: {}", settlement.toString());
 
         return settlement;
     }
 
     @GetMapping("/info")
     public SingleSettlementInfoResponseDto getMeetingInfo(@RequestParam("settlementId") Long settlementId) {
+
+        log.info("정산 정보 조회: {}", settlementId);
+
         return settlementService.getSingleSettlementInfo(settlementId);
     }
 }

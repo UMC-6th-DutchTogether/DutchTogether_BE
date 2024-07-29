@@ -34,8 +34,6 @@ public class MeetingService {
         // Meeting 저장
         Meeting savedMeeting = meetingRepository.save(meeting);
 
-        log.info("저장된 모임: {}", savedMeeting);
-
         // MeetingCreateResponseDto 생성 및 반환
         return MeetingCreateResponseDto.builder()
                 .meetingNum(savedMeeting.getId())

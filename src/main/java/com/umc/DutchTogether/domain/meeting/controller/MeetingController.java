@@ -32,6 +32,8 @@ public class MeetingController {
 
         MeetingCreateResponseDto meeting = meetingService.createMeeting(request);
 
+        log.info("저장된 모임의 번호: {}", meeting);
+
         return meeting;
     }
 }
