@@ -1,4 +1,4 @@
-package com.umc.DutchTogether.global.validation;
+package com.umc.DutchTogether.global.apiPayload.validation;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
