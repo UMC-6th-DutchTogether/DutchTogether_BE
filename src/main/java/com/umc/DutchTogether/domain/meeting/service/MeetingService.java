@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class MeetingService {
 
     private final MeetingRepository meetingRepository;
-    private final SettlementService settlementService;
 
-    public MeetingService(MeetingRepository meetingRepository, SettlementService settlementService) {
+    public MeetingService(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
-        this.settlementService = settlementService;
     }
 
     // Meeting 데이터 저장

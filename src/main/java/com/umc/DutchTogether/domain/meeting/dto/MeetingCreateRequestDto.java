@@ -22,5 +22,6 @@ public class MeetingCreateRequestDto {
     private String password;
 
     @NotBlank(message = "모임의 이름은 필수입니다.")
+    @Size(min = 2, max = 12)
     private String meetingName;
 }
