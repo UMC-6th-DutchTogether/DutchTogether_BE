@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 @Builder
 public class MeetingCreateResponseDto {
-    private Long meeting_num;
+    private Long meetingNum;
 }

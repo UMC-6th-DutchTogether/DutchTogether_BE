@@ -5,9 +5,11 @@ import com.umc.DutchTogether.domain.settlement.dto.SingleSettlementInfoResponseD
 import com.umc.DutchTogether.domain.settlement.dto.SingleSettlementCreateRequestDto;
 import com.umc.DutchTogether.domain.settlement.dto.SingleSettlementCreateResponseDto;
 import com.umc.DutchTogether.domain.settlement.service.SettlementService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/settlement/single")
 public class SingleSettlementController {
@@ -25,6 +27,8 @@ public class SingleSettlementController {
     @ResponseStatus(HttpStatus.OK)
     public SingleSettlementCreateResponseDto createSingleSettlement(@RequestBody SingleSettlementCreateRequestDto request) {
         SingleSettlementCreateResponseDto settlement = settlementService.createSettlement(request);
+
+        log.info("settlement created: {}", settlement.toString());
 
         return settlement;
     }

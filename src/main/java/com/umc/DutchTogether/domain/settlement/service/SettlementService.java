@@ -35,7 +35,7 @@ public class SettlementService {
 
         Payer payer = Payer.builder()
                 .name(request.getAccountHolder())
-                .accountNum(Long.parseLong(request.getAccountNumber()))
+                .accountNum(request.getAccountNumber())
                 .bank(request.getBankName())
                 .build();
 
@@ -44,6 +44,7 @@ public class SettlementService {
         Settlement settlement = Settlement.builder()
                 .meeting(meeting)
                 .payer(payer)
+                .totalAmount(request.getTotalAmount())
                 .numPeople(request.getParticipants())
                 .build();
 
@@ -59,6 +60,7 @@ public class SettlementService {
                 .accountHolder(payer.getName())
                 .accountNumber(payer.getAccountNum())
                 .amount(settlement.getTotalAmount())
+                .participants(settlement.getNumPeople())
                 .settlementId(settlement.getId())
                 .build();
 

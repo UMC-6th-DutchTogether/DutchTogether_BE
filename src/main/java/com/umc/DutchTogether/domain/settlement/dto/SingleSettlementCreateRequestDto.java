@@ -10,7 +10,7 @@ import lombok.Setter;
 public class SingleSettlementCreateRequestDto {
     private Long meeting_num;
     private String bankName;
-    private String accountNumber;
+    private Long accountNumber;
     private String accountHolder;
     private int totalAmount;
     private int participants;

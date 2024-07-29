@@ -26,8 +26,8 @@ public class MeetingService {
     @Transactional
     public MeetingCreateResponseDto createMeeting(MeetingCreateRequestDto request) {
         Meeting.MeetingBuilder meetingBuilder = Meeting.builder().name(request.getMeetingName());
-        if(request.getMeeting_id() != null){
-            Meeting.builder().meetingId(request.getMeeting_id());
+        if(request.getMeetingId() != null){
+            Meeting.builder().meetingId(request.getMeetingId());
             Meeting.builder().password(request.getPassword());
         }
 
@@ -36,9 +36,11 @@ public class MeetingService {
         // Meeting 저장
         Meeting savedMeeting = meetingRepository.save(meeting);
 
+        log.info("저장된 모임: {}", savedMeeting);
+
         // MeetingCreateResponseDto 생성 및 반환
         return MeetingCreateResponseDto.builder()
-                .meeting_num(savedMeeting.getId())
+                .meetingNum(savedMeeting.getId())
                 .build();
     }
 }
