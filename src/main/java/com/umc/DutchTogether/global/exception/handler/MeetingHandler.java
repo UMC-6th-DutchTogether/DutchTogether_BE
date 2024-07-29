@@ -1,7 +1,7 @@
-package com.umc.DutchTogether.global.apiPayload.exception.handler;
+package com.umc.DutchTogether.global.exception.handler;
 
 import com.umc.DutchTogether.global.apiPayload.code.BaseErrorCode;
-import com.umc.DutchTogether.global.apiPayload.exception.GeneralException;
+import com.umc.DutchTogether.global.exception.GeneralException;
 
 public class MeetingHandler extends GeneralException {
 

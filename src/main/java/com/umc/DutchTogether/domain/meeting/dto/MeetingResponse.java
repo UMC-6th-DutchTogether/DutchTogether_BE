@@ -11,9 +11,7 @@ public class MeetingResponse {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class MeetingDT0{
-        private String meetingId;
-        private String password;
-        private String name;
+    public static class MeetingDT0 {
+        private Long meetingNum;
     }
 }

@@ -6,11 +6,17 @@ import com.umc.DutchTogether.domain.meeting.entity.Meeting;
 
 public class MeetingConverter {
 
-    public static MeetingResponse.MeetingDT0 toMeetingDTD(MeetingRequest.MeetingDT0 requestBody) {
-        return MeetingResponse.MeetingDT0.builder()
+    public static Meeting toMeetingDTD(MeetingRequest.MeetingDT0 requestBody) {
+        return Meeting.builder()
                 .meetingId(requestBody.getMeetingId())
                 .password(requestBody.getPassword())
                 .name(requestBody.getName())
+                .build();
+    }
+
+    public static MeetingResponse.MeetingDT0 toMeetingResultDTD(Meeting meeting) {
+        return MeetingResponse.MeetingDT0.builder()
+                .meetingNum(meeting.getId())
                 .build();
     }
 }

@@ -1,6 +1,8 @@
 package com.umc.DutchTogether.domain.meeting.service;
 
-public interface MeetingCommandService {
+import com.umc.DutchTogether.domain.meeting.dto.MeetingRequest;
+import com.umc.DutchTogether.domain.meeting.entity.Meeting;
 
-    public void CheckValidPassword(String password);
+public interface MeetingCommandService {
+    public Meeting addMeeting(MeetingRequest.MeetingDT0 request);
 }
