@@ -28,10 +28,10 @@ public class MeetingCommandServiceImpl implements MeetingCommandService{
     }
 
     private void  CheckValidPassword(String meetingId, String password) {
-        if (meetingId != null && (password == null || password.isEmpty())) {
-            throw new MeetingHandler(ErrorStatus._NOT_VALID_PW);
+        if (meetingId == null || meetingId.isEmpty()) {
+            throw new MeetingHandler(ErrorStatus._NOT_VALID_ID);
         }
-        if (meetingId == null && (password != null && !password.isEmpty())) {
+        if (password == null || password.isEmpty()) {
             throw new MeetingHandler(ErrorStatus._NOT_VALID_PW);
         }
     }
