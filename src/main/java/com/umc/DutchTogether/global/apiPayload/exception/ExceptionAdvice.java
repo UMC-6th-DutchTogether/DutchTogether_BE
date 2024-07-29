@@ -1,4 +1,4 @@
-package com.umc.DutchTogether.global.exception;
+package com.umc.DutchTogether.global.apiPayload.exception;
 
 import com.umc.DutchTogether.global.apiPayload.ApiResponse;
 import com.umc.DutchTogether.global.apiPayload.code.ErrorReasonDTO;
