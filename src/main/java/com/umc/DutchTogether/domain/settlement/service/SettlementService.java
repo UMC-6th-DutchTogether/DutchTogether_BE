@@ -71,10 +71,14 @@ public class SettlementService {
         Settlement settlement = settlementRepository.findById(settlementId)
                 .orElseThrow(() -> new ResourceNotFoundException("Settlement not found"));
 
+        Meeting meeting = meetingRepository.findById(settlement.getMeeting().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Meeting not found"));
+
         Payer payer = payerRepository.findById(settlement.getPayer().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Settlement not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Payer not found"));
 
         return SingleSettlementInfoResponseDto.builder()
+                .meetingName(meeting.getName())
                 .payer(payer.getName())
                 .bank(payer.getBank())
                 .account_num(payer.getAccountNum())
