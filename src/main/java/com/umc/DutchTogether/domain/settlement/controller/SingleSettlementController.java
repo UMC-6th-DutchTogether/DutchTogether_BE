@@ -6,6 +6,7 @@ import com.umc.DutchTogether.domain.settlement.dto.SingleSettlementCreateRequest
 import com.umc.DutchTogether.domain.settlement.dto.SingleSettlementCreateResponseDto;
 import com.umc.DutchTogether.domain.settlement.service.SettlementService;
 import com.umc.DutchTogether.global.validation.ValidationUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -14,17 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/settlement/single")
 public class SingleSettlementController {
 
     private final SettlementService settlementService;
-    private final MeetingRepository meetingRepository;
-
-
-    public SingleSettlementController(SettlementService settlementService, MeetingRepository meetingRepository) {
-        this.settlementService = settlementService;
-        this.meetingRepository = meetingRepository;
-    }
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
