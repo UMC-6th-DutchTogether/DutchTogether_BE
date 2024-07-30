@@ -19,7 +19,7 @@ public class MeetingRestController {
 
     @PostMapping("/")
     public ApiResponse<MeetingResponse.MeetingDT0> createMeeting(@RequestBody @Valid MeetingRequest.MeetingDT0 request){
-        Meeting meeting = meetingCommandService.joinMeeting(request);
+        Meeting meeting = meetingCommandService.CreateMeeting(request);
         return ApiResponse.onSuccess(MeetingConverter.toMeetingResultDTD(meeting));
     }
 }

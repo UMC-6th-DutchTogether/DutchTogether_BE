@@ -16,7 +16,7 @@ public class MeetingCommandServiceImpl implements MeetingCommandService{
     private final MeetingRepository meetingRepository;
 
     @Override
-    public Meeting joinMeeting(MeetingRequest.MeetingDT0 request) {
+    public Meeting CreateMeeting(MeetingRequest.MeetingDT0 request) {
         String meetingId = request.getMeetingId();
         String password = request.getPassword();
         if( (meetingId == null || meetingId.isEmpty() )&& (password == null || password.isEmpty())) {
