@@ -1,4 +1,4 @@
-package com.umc.DutchTogether.global.exception;
+package com.umc.DutchTogether.global.apiPayload.exception;
 
 import com.umc.DutchTogether.global.apiPayload.ApiResponse;
 import com.umc.DutchTogether.global.apiPayload.code.ErrorReasonDTO;
@@ -24,7 +24,6 @@ import java.util.Optional;
 @RestControllerAdvice(annotations = {RestController.class})
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
-
     @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
         String errorMessage = e.getConstraintViolations().stream()
@@ -34,7 +33,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternalConstraint(e, ErrorStatus.valueOf(errorMessage), HttpHeaders.EMPTY,request);
     }
-
 
     @Override
     protected org.springframework.http.ResponseEntity<java.lang.Object> handleMethodArgumentNotValid(org.springframework.web.bind.MethodArgumentNotValidException e, org.springframework.http.HttpHeaders headers, org.springframework.http.HttpStatusCode status, org.springframework.web.context.request.WebRequest request) {

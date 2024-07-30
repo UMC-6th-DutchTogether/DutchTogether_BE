@@ -15,6 +15,9 @@ public class MeetingConverter {
     }
 
     public static MeetingResponse.MeetingDT0 toMeetingResultDTD(Meeting meeting) {
+        if (meeting == null) {
+            return null;
+        }
         return MeetingResponse.MeetingDT0.builder()
                 .meetingNum(meeting.getId())
                 .build();
