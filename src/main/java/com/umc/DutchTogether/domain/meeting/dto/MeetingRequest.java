@@ -22,4 +22,14 @@ public class MeetingRequest {
         @NotNull(message = "모임 이름을 입력해주세요")
         private String name;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ExistMeeting
+    public static class MeetingLinkDT0{
+        private Long meetingNum;
+    }
+
 }

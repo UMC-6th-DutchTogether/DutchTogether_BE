@@ -14,4 +14,12 @@ public class MeetingResponse {
     public static class MeetingDT0 {
         private Long meetingNum;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MeetingLinkResultDT0 {
+        private String meetingLink;
+    }
 }

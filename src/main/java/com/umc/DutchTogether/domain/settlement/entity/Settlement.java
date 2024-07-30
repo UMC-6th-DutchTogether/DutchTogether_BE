@@ -47,6 +47,4 @@ public class Settlement extends BaseEntity {
 
 
     //타입 같이 정한 후 영수증 추가해야함 !
-
-    private String link;
 }

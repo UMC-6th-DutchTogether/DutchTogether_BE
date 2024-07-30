@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,16 @@ public class MeetingCommandServiceImpl implements MeetingCommandService{
             return null;
         }
         Meeting newMeeting = MeetingConverter.toMeetingDTD(request);
+
+        String generatedLink = generateLink();
+        newMeeting.setLink(generatedLink);
+
         return meetingRepository.save(newMeeting);
     }
 
+    private String generateLink() {
+        String domain = "https://umc.together.com";
+        String randomPart = UUID.randomUUID().toString();
+        return domain + "/" + randomPart;
+    }
 }
