@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -31,4 +32,6 @@ public class Meeting extends BaseEntity {
 
     @Column(length = 20)
     private String name;
+
+    private String link;
 }
