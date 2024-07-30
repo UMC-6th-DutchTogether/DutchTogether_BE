@@ -1,8 +1,8 @@
-package com.umc.DutchTogether.global.apiPayload.validation;
+package com.umc.DutchTogether.global.validation;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
+// 삭제 예정
 public class ValidationUtils {
 
     public static String getFirstErrorMessage(BindingResult bindingResult) {

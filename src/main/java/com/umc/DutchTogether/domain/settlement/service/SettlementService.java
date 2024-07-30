@@ -9,7 +9,7 @@ import com.umc.DutchTogether.domain.settlement.dto.SingleSettlementCreateRespons
 import com.umc.DutchTogether.domain.settlement.dto.SingleSettlementInfoResponseDto;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
-import com.umc.DutchTogether.global.exception.ResourceNotFoundException;
+import com.umc.DutchTogether.global.apiPayload.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
