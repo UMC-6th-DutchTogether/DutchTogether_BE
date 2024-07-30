@@ -9,8 +9,6 @@ import com.umc.DutchTogether.domain.meeting.service.MeetingQueryService;
 import com.umc.DutchTogether.global.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -23,7 +21,7 @@ public class MeetingRestController {
 
     @PostMapping("/")
     public ApiResponse<MeetingResponse.MeetingDT0> createMeeting(@RequestBody @Valid MeetingRequest.MeetingDT0 request){
-        Meeting meeting = meetingCommandService.joinMeeting(request);
+        Meeting meeting = meetingCommandService.createMeeting(request);
         return ApiResponse.onSuccess(MeetingConverter.toMeetingResultDTD(meeting));
     }
 

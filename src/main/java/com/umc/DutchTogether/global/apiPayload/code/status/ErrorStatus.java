@@ -19,8 +19,10 @@ public enum ErrorStatus implements BaseErrorCode {
     // 미팅 관련 에러
     MEETING_NOT_VALID_ID(HttpStatus.UNAUTHORIZED, "MEETING4001", "ID를 다시 입력해주세요."),
     MEETING_NOT_VALID_PW(HttpStatus.UNAUTHORIZED, "MEETING4001", "비밀번호를 다시 입력해주세요."),
-    MEETING_NOT_FOUND(HttpStatus.BAD_REQUEST,"MEETING4002","모임이 존재하지 않습니다.");
+    MEETING_NOT_FOUND(HttpStatus.BAD_REQUEST,"MEETING4002","모임이 존재하지 않습니다."),
 
+    // 정산하기 관련 에러
+    SETTLEMENT_NOT_FOUND_ID(HttpStatus.NOT_FOUND,"SETTLEMENT4004","settlement ID를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
