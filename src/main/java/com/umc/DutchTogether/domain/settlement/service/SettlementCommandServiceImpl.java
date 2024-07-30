@@ -27,7 +27,7 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
 
     public SettlementResponse.SettlementDTO CreateSingleSettlement(SettlementRequest.SettlementDTO request) {
         Meeting meeting = meetingRepository.findById(request.getMeetingNum())
-                .orElseThrow(() -> new SettlementHandler(ErrorStatus._INTERNAL_SERVER_ERROR)); //RESOURCE ERROR로 추가 예정
+                .orElseThrow(() -> new SettlementHandler(ErrorStatus.SETTLEMENT_NOT_FOUND_ID));
 
         // 결제자 저장
         Payer payer = Payer.builder()
