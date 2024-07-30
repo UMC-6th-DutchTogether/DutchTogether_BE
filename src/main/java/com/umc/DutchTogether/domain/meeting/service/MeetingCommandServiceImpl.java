@@ -24,6 +24,8 @@ public class MeetingCommandServiceImpl implements MeetingCommandService{
         }
         // id,pw가 있을 때만 저장
         Meeting newMeeting = MeetingConverter.toMeetingDTD(request);
+        newMeeting.getCreatedAt();
+        newMeeting.getUpdatedAt();
         return meetingRepository.save(newMeeting);
     }
 }
