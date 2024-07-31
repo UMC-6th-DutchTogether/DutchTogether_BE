@@ -1,7 +1,7 @@
-package com.umc.DutchTogether.domain.meeting.validation.validator;
+package com.umc.DutchTogether.global.validation.validator;
 
 import com.umc.DutchTogether.domain.meeting.dto.MeetingRequest;
-import com.umc.DutchTogether.domain.meeting.validation.annotation.ExistMeeting;
+import com.umc.DutchTogether.global.validation.annotation.ValidateMeeting;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MeetingExistValidator implements ConstraintValidator<ExistMeeting, MeetingRequest.MeetingDT0> {
+public class MeetingValidator implements ConstraintValidator<ValidateMeeting, MeetingRequest.MeetingDT0> {
 
     @Override
-    public void initialize(ExistMeeting constraintAnnotation) {
+    public void initialize(ValidateMeeting constraintAnnotation) {
     }
 
     @Override
@@ -51,8 +51,8 @@ public class MeetingExistValidator implements ConstraintValidator<ExistMeeting, 
         // ID 존재하지 않는 경우, 비밀번호 저장하지 않습니다.
         if ((meetingId.isBlank()) && (!password.isBlank())) {
             constraintValidatorContext.disableDefaultConstraintViolation();
-            constraintValidatorContext.buildConstraintViolationWithTemplate("비밀번호는 저장되지 않습니다.")
-                    .addPropertyNode("password")
+            constraintValidatorContext.buildConstraintViolationWithTemplate("아이디를 입력해주세요.")
+                    .addPropertyNode("meetingId")
                     .addConstraintViolation();
             return false;
         }

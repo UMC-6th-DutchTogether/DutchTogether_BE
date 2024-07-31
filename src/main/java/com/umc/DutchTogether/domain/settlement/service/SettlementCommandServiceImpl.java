@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -26,8 +28,7 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
     @Override
 
     public SettlementResponse.SettlementDTO CreateSingleSettlement(SettlementRequest.SettlementDTO request) {
-        Meeting meeting = meetingRepository.findById(request.getMeetingNum())
-                .orElseThrow(() -> new SettlementHandler(ErrorStatus.SETTLEMENT_NOT_FOUND_ID));
+        Optional<Meeting> meeting = meetingRepository.findById(request.getMeetingNum());
 
         // 결제자 저장
         Payer payer = Payer.builder()
@@ -36,7 +37,7 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
                 .bank(request.getBankName())
                 .build();
         Settlement settlement = Settlement.builder()
-                .meeting(meeting)
+                .meeting(meeting.get())
                 .payer(payer)
                 .totalAmount(request.getTotalAmount())
                 .numPeople(request.getNumPeople())

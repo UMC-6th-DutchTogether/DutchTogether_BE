@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -17,9 +19,7 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
     private final MeetingRepository meetingRepository;
 
     @Override
-    public String getMeetingLink(Long meetingNum) {
-        Meeting meeting = meetingRepository.findById(meetingNum)
-                .orElseThrow(() -> new MeetingHandler(ErrorStatus.MEETING_NOT_FOUND));
-        return meeting.getLink();
+    public Meeting getMeeting(Long meetingNum) {
+        return meetingRepository.findById(meetingNum).orElse(null);
     }
 }
