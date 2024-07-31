@@ -1,6 +1,10 @@
 package com.umc.DutchTogether.domain.meeting.service;
 
+import com.umc.DutchTogether.domain.meeting.entity.Meeting;
+
+import java.util.Optional;
+
 public interface MeetingQueryService {
-    public String getMeetingLink(Long meetingNum);
+    public Meeting getMeeting(Long meetingNum);
 
 }

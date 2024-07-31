@@ -1,6 +1,6 @@
-package com.umc.DutchTogether.domain.meeting.validation.annotation;
+package com.umc.DutchTogether.global.validation.annotation;
 
-import com.umc.DutchTogether.domain.meeting.validation.validator.PasswordValidator;
+import com.umc.DutchTogether.global.validation.validator.PasswordValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

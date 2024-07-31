@@ -22,4 +22,13 @@ public class MeetingConverter {
                 .meetingNum(meeting.getId())
                 .build();
     }
+
+    public static MeetingResponse.MeetingLinkResultDT0 toMeetingLinkResultDTD(Meeting meeting) {
+        if (meeting == null) {
+            return null;
+        }
+        return MeetingResponse.MeetingLinkResultDT0.builder()
+                .meetingLink(meeting.getLink())
+                .build();
+    }
 }
