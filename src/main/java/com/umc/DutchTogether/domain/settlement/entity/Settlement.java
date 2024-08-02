@@ -40,6 +40,8 @@ public class Settlement extends BaseEntity {
 
     private String items;
 
+    private int participants;
+
     private int numPeople;
 
     @Column(name = "total_amount", nullable = false)

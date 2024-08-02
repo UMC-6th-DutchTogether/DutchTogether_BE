@@ -13,7 +13,6 @@ public class MeetingConverter {
                 .name(requestBody.getName())
                 .build();
     }
-
     public static MeetingResponse.MeetingDT0 toMeetingResultDTD(Meeting meeting) {
         if (meeting == null) {
             return null;
