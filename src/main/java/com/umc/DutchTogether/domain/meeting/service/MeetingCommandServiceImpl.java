@@ -36,9 +36,7 @@ public class MeetingCommandServiceImpl implements MeetingCommandService{
     }
 
     private String generateLink() {
-        String domain = "https://umc.together.com";
-        String randomPart = UUID.randomUUID().toString();
-        return domain + "/" + randomPart;
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }
 

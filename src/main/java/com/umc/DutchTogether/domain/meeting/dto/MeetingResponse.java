@@ -25,4 +25,18 @@ public class MeetingResponse {
     public static class MeetingLinkResultDT0 {
         private String meetingLink;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "나만 정산하기 정보 조회 DTO")
+    public static class SingleSettlementResultDTO {
+        private String meetingName;
+        private String payer;
+        private Long account_num;
+        private String bank;
+        private int total_amount;
+        private int num_people;
+    }
 }
