@@ -3,8 +3,10 @@ package com.umc.DutchTogether.domain.settlement.controller;
 import com.umc.DutchTogether.domain.settlement.dto.*;
 import com.umc.DutchTogether.domain.settlement.service.SettlementCommandService;
 import com.umc.DutchTogether.global.apiPayload.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,7 +16,6 @@ public class SettlementRestController {
 
 
     private final SettlementCommandService settlementCommandService;
-
     //    @PostMapping("/single")
 //    @ResponseStatus(HttpStatus.OK)
 //    public Object createSingleSettlement(@Validated @RequestBody SingleSettlementCreateRequestDto request, BindingResult bindingResult) {
@@ -32,7 +33,7 @@ public class SettlementRestController {
 //    }
 
     @PostMapping("/single")
-    public ApiResponse<SettlementResponse.SettlementDTO> createSingleSettlement(@RequestBody SettlementRequest.SettlementDTO request) {
+    public ApiResponse<SettlementResponse.SettlementDTO> createSingleSettlement(@RequestBody @Valid SettlementRequest.SettlementDTO request) {
         SettlementResponse.SettlementDTO settlement = settlementCommandService.CreateSingleSettlement(request);
         return ApiResponse.onSuccess(settlement);
     }

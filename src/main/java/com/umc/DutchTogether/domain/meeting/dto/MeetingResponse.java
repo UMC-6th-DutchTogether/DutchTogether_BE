@@ -16,4 +16,13 @@ public class MeetingResponse {
     public static class MeetingDT0 {
         private Long meetingNum;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "모임 링크 조회 응답 DTO")
+    public static class MeetingLinkResultDT0 {
+        private String meetingLink;
+    }
 }

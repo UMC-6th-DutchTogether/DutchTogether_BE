@@ -1,5 +1,6 @@
 package com.umc.DutchTogether.domain.settlement.dto;
 
+import com.umc.DutchTogether.global.validation.annotation.ExistMeeting;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class SettlementRequest {
 
         @NotNull(message = "모임 번호를 요청에 포함해주세요.")
         @Min(value = 0, message = "모임 번호는 음수일 수 없습니다.")
+        @ExistMeeting
         private Long meetingNum;
 
         @NotNull(message = "은행 이름을 입력해주세요.")
