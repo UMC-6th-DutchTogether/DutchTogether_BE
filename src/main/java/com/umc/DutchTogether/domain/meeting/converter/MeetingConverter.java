@@ -3,6 +3,8 @@ package com.umc.DutchTogether.domain.meeting.converter;
 import com.umc.DutchTogether.domain.meeting.dto.MeetingRequest;
 import com.umc.DutchTogether.domain.meeting.dto.MeetingResponse;
 import com.umc.DutchTogether.domain.meeting.entity.Meeting;
+import com.umc.DutchTogether.domain.payer.entity.Payer;
+import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 
 public class MeetingConverter {
 
@@ -24,11 +26,25 @@ public class MeetingConverter {
     }
 
     public static MeetingResponse.MeetingLinkResultDT0 toMeetingLinkResultDTD(Meeting meeting) {
+        String domain = "https://www.together.com/";
+
         if (meeting == null) {
             return null;
         }
         return MeetingResponse.MeetingLinkResultDT0.builder()
-                .meetingLink(meeting.getLink())
+                .meetingLink(domain + meeting.getLink())
+                .build();
+    }
+
+
+    public static MeetingResponse.SingleSettlementResultDTO toSingleSettlementResultDTO(Meeting meeting, Settlement settlement, Payer payer) {
+        return MeetingResponse.SingleSettlementResultDTO.builder()
+                .meetingName(meeting.getName())
+                .total_amount(settlement.getTotalAmount())
+                .num_people(settlement.getNumPeople())
+                .account_num(payer.getAccountNum())
+                .payer(payer.getName())
+                .bank(payer.getBank())
                 .build();
     }
 }
