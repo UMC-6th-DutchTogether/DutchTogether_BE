@@ -4,6 +4,7 @@ import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -20,5 +21,6 @@ public class SettlementStatus extends BaseEntity {
     @JoinColumn(name = "settlement_id")
     private Settlement settlement;
 
+    @ColumnDefault("0")
     private int completedPeople;
 }

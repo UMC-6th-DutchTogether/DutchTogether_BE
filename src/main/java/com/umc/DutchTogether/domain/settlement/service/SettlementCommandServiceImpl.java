@@ -9,6 +9,8 @@ import com.umc.DutchTogether.domain.settlement.dto.SettlementRequest;
 import com.umc.DutchTogether.domain.settlement.dto.SettlementResponse;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
+import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
+import com.umc.DutchTogether.domain.settlementStatus.respoistory.SettlementStatusRepository;
 import com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +27,9 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
     private final SettlementRepository settlementRepository;
     private final MeetingRepository meetingRepository;
     private final PayerRepository payerRepository;
-    @Override
+    private final SettlementStatusRepository settlementStatusRepository;
 
+    @Override
     public SettlementResponse.SettlementDTO CreateSingleSettlement(SettlementRequest.SettlementDTO request) {
         Optional<Meeting> meeting = meetingRepository.findById(request.getMeetingNum());
 
@@ -42,9 +45,13 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
                 .totalAmount(request.getTotalAmount())
                 .numPeople(request.getNumPeople())
                 .build();
+        SettlementStatus settlementStatus = SettlementStatus.builder()
+                .settlement(settlement)
+                .build();
 
         payerRepository.save(payer);
         settlementRepository.save(settlement);
+        settlementStatusRepository.save(settlementStatus);
 
         return SettlementConverter.toSettlementDTO(settlement);
     }
