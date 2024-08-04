@@ -34,4 +34,10 @@ public class MeetingRestController {
         return ApiResponse.onSuccess(MeetingConverter.toMeetingLinkResultDTD(meeting));
     }
 
+    @GetMapping("/{link}")
+    public ApiResponse<MeetingResponse.SingleSettlementResultDTO> getSingleSettlement(@PathVariable String link) {
+        MeetingResponse.SingleSettlementResultDTO meeting = meetingQueryService.getSingleSettlement(link);
+        return ApiResponse.onSuccess(meeting);
+    }
+
 }

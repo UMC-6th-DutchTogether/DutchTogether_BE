@@ -28,6 +28,6 @@ public class SettlementResponse {
         private Long account_num;
         private String bank;
         private int total_amount;
-        private int participants;
+        private int num_people;
     }
 }
