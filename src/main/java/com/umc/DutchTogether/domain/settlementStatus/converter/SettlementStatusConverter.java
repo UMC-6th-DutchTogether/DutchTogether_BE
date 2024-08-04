@@ -9,12 +9,19 @@ import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 public class SettlementStatusConverter {
     public static SettlementStatusResponse.SettlementStatusDTO toSettlementStatusDTO(SettlementStatus settlementStatus){
 
+        if (settlementStatus == null) {
+            return null;
+        }
+
         Settlement settlement = settlementStatus.getSettlement();
+        if (settlement == null) {
+            return null;
+        }
+
         Meeting meeting = settlement.getMeeting();
         Payer payer = settlement.getPayer();
 
         return SettlementStatusResponse.SettlementStatusDTO.builder()
-                .meetingId(meeting.getId())
                 .meetingName(meeting.getName())
                 .payer(payer.getName())
                 .participants(settlement.getParticipants())

@@ -1,6 +1,5 @@
 package com.umc.DutchTogether.domain.settlementStatus.dto;
 
-import com.umc.DutchTogether.domain.meeting.validation.annotation.ValidatePassword;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +15,18 @@ public class SettlementStatusRequest {
     public static class SettlementStatusDTO{
 
         private String meetingId;
-        @ValidatePassword
+
         private String password;
 
     }
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "입금자명 추가 요청 DTO")
+    public static class AddSettlerRequest {
 
+        private String settlerName;
+
+    }
 }

@@ -6,8 +6,8 @@ import com.umc.DutchTogether.domain.settlementStatus.dto.SettlementStatusRequest
 import com.umc.DutchTogether.domain.settlementStatus.dto.SettlementStatusResponse;
 import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 
+import java.util.Optional;
+
 public interface SettlementStatusCommandService {
-
-    //public SettlementStatus login(SettlementStatusRequest.SettlementStatusDTO request);
-
+    public void addSettler(Long statusId, String settlerName);
 }

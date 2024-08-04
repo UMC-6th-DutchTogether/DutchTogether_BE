@@ -33,4 +33,5 @@ public class MeetingRestController {
         Meeting meeting = meetingQueryService.getMeeting(meetingNum);
         return ApiResponse.onSuccess(MeetingConverter.toMeetingLinkResultDTD(meeting));
     }
+
 }
