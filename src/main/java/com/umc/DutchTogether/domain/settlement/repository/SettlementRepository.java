@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface SettlementRepository extends JpaRepository<Settlement, Long> {
-    Optional<Settlement> findByMeeting(Meeting meeting);
+    Optional<Settlement> findByMeetingId(Long meetingId);
 }

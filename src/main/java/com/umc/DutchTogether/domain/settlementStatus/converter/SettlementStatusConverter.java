@@ -7,28 +7,12 @@ import com.umc.DutchTogether.domain.settlementStatus.dto.SettlementStatusRespons
 import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 
 public class SettlementStatusConverter {
-    public static SettlementStatusResponse.SettlementStatusDTO toSettlementStatusDTO(SettlementStatus settlementStatus){
-
-        if (settlementStatus == null) {
-            return null;
-        }
-
-        Settlement settlement = settlementStatus.getSettlement();
-        if (settlement == null) {
-            return null;
-        }
-
-        Meeting meeting = settlement.getMeeting();
-        Payer payer = settlement.getPayer();
-
+    public static SettlementStatusResponse.SettlementStatusDTO toSettlementStatusDTO(Settlement settlement,SettlementStatus settlementStatus ,Meeting meeting, Payer payer){
         return SettlementStatusResponse.SettlementStatusDTO.builder()
                 .meetingName(meeting.getName())
                 .payer(payer.getName())
-                .participants(settlement.getParticipants())
+                .participants(settlementStatus.getCompletedPeople())
                 .numPeople(settlement.getNumPeople())
                 .build();
     }
-
-
-
 }

@@ -25,13 +25,13 @@ public class MeetingRestController {
     @PostMapping("/")
     public ApiResponse<MeetingResponse.MeetingDT0> createMeeting(@Valid @RequestBody MeetingRequest.MeetingDT0 request){
         Meeting meeting = meetingCommandService.createMeeting(request);
-        return ApiResponse.onSuccess(MeetingConverter.toMeetingResultDTD(meeting));
+        return ApiResponse.onSuccess(MeetingConverter.toMeetingResultDTO(meeting));
     }
 
     @GetMapping("/{meetingNum}/link")
     public ApiResponse<MeetingResponse.MeetingLinkResultDT0> getMeetingLink(@ExistMeeting @PathVariable Long meetingNum) {
         Meeting meeting = meetingQueryService.getMeeting(meetingNum);
-        return ApiResponse.onSuccess(MeetingConverter.toMeetingLinkResultDTD(meeting));
+        return ApiResponse.onSuccess(MeetingConverter.toMeetingLinkResultDTO(meeting));
     }
 
     @GetMapping("/{link}")

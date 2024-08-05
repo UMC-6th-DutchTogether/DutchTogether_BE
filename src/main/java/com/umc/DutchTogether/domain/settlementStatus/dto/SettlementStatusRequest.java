@@ -13,11 +13,8 @@ public class SettlementStatusRequest {
     @AllArgsConstructor
     @Schema(title = "정산 현황 로그인 요청 DTO")
     public static class SettlementStatusDTO{
-
         private String meetingId;
-
         private String password;
-
     }
     @Builder
     @Getter
@@ -25,8 +22,7 @@ public class SettlementStatusRequest {
     @AllArgsConstructor
     @Schema(title = "입금자명 추가 요청 DTO")
     public static class AddSettlerRequest {
-
         private String settlerName;
-
     }
+    
 }

@@ -18,16 +18,10 @@ public class SettlementStatusResponse {
     @AllArgsConstructor
     @Schema(title = "정산 현황 응답 DTO")
     public static class SettlementStatusDTO{
-
         private String meetingName;
-
         private String payer;
-
         private int participants;
-
         private int numPeople;
-
-        private LocalDateTime settlementTime;
     }
 
     @Builder
@@ -35,7 +29,7 @@ public class SettlementStatusResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     @Schema(title = "정산자 응답 DTO")
-    public static class SettlementSettlerResponse {
+    public static class SettlementSettlerResponseDTO {
         private String name;
     }
 }
