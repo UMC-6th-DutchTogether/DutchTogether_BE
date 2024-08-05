@@ -24,7 +24,7 @@ public class MeetingConverter {
                 .build();
     }
 
-    public static MeetingResponse.MeetingLinkResultDT0 toMeetingLinkResultDTD(Meeting meeting) {
+    public static MeetingResponse.MeetingLinkResultDT0 toMeetingLinkResultDTO(Meeting meeting) {
         String domain = "http://www.dutchtogether.com/";
 
         if (meeting == null) {
