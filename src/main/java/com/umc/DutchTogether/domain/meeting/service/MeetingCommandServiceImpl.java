@@ -27,7 +27,7 @@ public class MeetingCommandServiceImpl implements MeetingCommandService{
         if( (meetingId == null || meetingId.isEmpty() )&& (password == null || password.isEmpty())) {
             return null;
         }
-        Meeting newMeeting = MeetingConverter.toMeetingDTD(request);
+        Meeting newMeeting = MeetingConverter.toMeetingDTO(request);
 
         String generatedLink = generateLink();
         newMeeting.setLink(generatedLink);

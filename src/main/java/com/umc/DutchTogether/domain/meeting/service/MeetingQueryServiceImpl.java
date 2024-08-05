@@ -36,9 +36,8 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
     @Override
     public MeetingResponse.SingleSettlementResultDTO getSingleSettlement(String link) {
         Meeting meeting = meetingRepository.findByLink("" + link).orElse(null);
-        Settlement settlement = settlementRepository.findByMeeting(meeting).orElse(null);
+        Settlement settlement = settlementRepository.findByMeetingId(meeting.getId()).orElse(null);
         Payer payer = payerRepository.findById(settlement.getPayer().getId()).orElse(null);
-
         return MeetingConverter.toSingleSettlementResultDTO(meeting, settlement, payer);
     }
 }

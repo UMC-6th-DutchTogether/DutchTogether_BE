@@ -8,15 +8,14 @@ import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 
 public class MeetingConverter {
 
-    public static Meeting toMeetingDTD(MeetingRequest.MeetingDT0 requestBody) {
+    public static Meeting toMeetingDTO(MeetingRequest.MeetingDT0 requestBody) {
         return Meeting.builder()
                 .meetingId(requestBody.getMeetingId())
                 .password(requestBody.getPassword())
                 .name(requestBody.getName())
                 .build();
     }
-
-    public static MeetingResponse.MeetingDT0 toMeetingResultDTD(Meeting meeting) {
+    public static MeetingResponse.MeetingDT0 toMeetingResultDTO(Meeting meeting) {
         if (meeting == null) {
             return null;
         }

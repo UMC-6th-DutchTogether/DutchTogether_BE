@@ -8,8 +8,9 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter//추가했음
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class SettlementSettler extends BaseEntity {
 
@@ -26,6 +27,6 @@ public class SettlementSettler extends BaseEntity {
     private Settler settler;
 
     @Enumerated(EnumType.STRING)
-    private SettlementStatus status;
+    private Status status;
 
 }
