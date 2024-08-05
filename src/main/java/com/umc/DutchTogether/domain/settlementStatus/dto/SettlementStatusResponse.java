@@ -21,7 +21,7 @@ public class SettlementStatusResponse {
     public static class SettlementStatusDTO{
         private String meetingName;
         private String payer;
-        private int participants;
+        private int completedNum;
         private int numPeople;
         private List<SettlementSettlersDTO> settlementStatusDTOList;
     }

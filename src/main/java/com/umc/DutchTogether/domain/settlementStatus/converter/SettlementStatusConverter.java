@@ -14,7 +14,7 @@ public class SettlementStatusConverter {
         return SettlementStatusResponse.SettlementStatusDTO.builder()
                 .meetingName(meeting.getName())
                 .payer(payer.getName())
-                .participants(settlementStatus.getCompletedPeople())
+                .completedNum(settlementStatus.getCompletedPeople())
                 .numPeople(settlement.getNumPeople())
                 .settlementStatusDTOList(settlersDTOList)
                 .build();
