@@ -19,14 +19,9 @@ public class SettlementStatusRestController {
     private final SettlementStatusQueryService settlementStatusQueryService;
 
     @GetMapping("/{statusId}")
-    public ResponseEntity<ApiResponse<SettlementStatusResponse.SettlementStatusDTO>> getSettlementStatus(@PathVariable Long statusId) {
-        try {
-            SettlementStatusResponse.SettlementStatusDTO statusDTO = settlementStatusQueryService.getStatus(statusId);
-            return ResponseEntity.ok(ApiResponse.onSuccess(statusDTO));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(ApiResponse.onFailure("404", e.getMessage(), null));
-        }
+    public ApiResponse<SettlementStatusResponse.SettlementStatusDTO> getSettlementStatus(@PathVariable Long statusId) {
+        SettlementStatusResponse.SettlementStatusDTO statusDTO = settlementStatusQueryService.getStatus(statusId);
+        return (ApiResponse.onSuccess(statusDTO));
     }
 
 // 입금자에 대한 입금 시각을 추가하는 api로 수정 예정    
