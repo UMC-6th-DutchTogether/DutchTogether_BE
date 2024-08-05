@@ -7,6 +7,5 @@ import java.util.Optional;
 public interface SettlementStatusQueryService {
 
     SettlementStatusResponse.SettlementStatusDTO getStatus(Long statusId);
-    SettlementStatusResponse.SettlementSettlerResponseDTO getSettler(Long statusId, String settlerName);
 }
 

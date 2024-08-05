@@ -27,6 +27,6 @@ public class SettlementSettler extends BaseEntity {
     private Settler settler;
 
     @Enumerated(EnumType.STRING)
-    private SettlementStatus status;
+    private Status status;
 
 }

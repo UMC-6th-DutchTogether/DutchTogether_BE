@@ -1,6 +1,6 @@
 package com.umc.DutchTogether.domain.settlementSettler.entity;
 
-public enum SettlementStatus {
+public enum Status {
     COMPLETED,
     PENDING
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class SettlementStatusResponse {
 
@@ -22,14 +23,16 @@ public class SettlementStatusResponse {
         private String payer;
         private int participants;
         private int numPeople;
+        private List<SettlementSettlersDTO> settlementStatusDTOList;
     }
 
     @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    @Schema(title = "정산자 응답 DTO")
-    public static class SettlementSettlerResponseDTO {
+    @Schema(title = "정산자 DTO")
+    public static class SettlementSettlersDTO {
         private String name;
+        private LocalDateTime updateAt;
     }
 }

@@ -18,8 +18,8 @@ public class SettlementStatusRestController {
 
     @GetMapping("/{meetingNum}")
     public ApiResponse<SettlementStatusResponse.SettlementStatusDTO> getSettlementStatus(@ExistMeeting @PathVariable Long meetingNum) {
-        SettlementStatusResponse.SettlementStatusDTO statusDTO = settlementStatusQueryService.getStatus(meetingNum);
-        return ApiResponse.onSuccess(statusDTO);
+        SettlementStatusResponse.SettlementStatusDTO status = settlementStatusQueryService.getStatus(meetingNum);
+        return ApiResponse.onSuccess(status);
     }
 
 // 입금자에 대한 입금 시각을 추가하는 api로 수정 예정    
@@ -37,7 +37,7 @@ public class SettlementStatusRestController {
 //    }
 
 //    @GetMapping("/{statusId}/settlers")
-//    public ResponseEntity<ApiResponse<SettlementStatusResponse.SettlementSettlerResponse>> getSettlerStatus(
+//    public ApiResponse<SettlementStatusResponse.SettlementSettlerResponseDTO> getSettlerStatus(
 //            @PathVariable Long statusId, @RequestParam String settlerName) {
 //        try {
 //            SettlementStatusResponse.SettlementSettlerResponse settlerDTO = settlementStatusQueryService.getSettler(statusId, settlerName);
