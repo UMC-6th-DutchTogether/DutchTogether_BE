@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class SettlementStatusRestController {
 
     private final SettlementStatusQueryService settlementStatusQueryService;
-    private final SettlementStatusCommandService settlementStatusCommandService;
 
     @GetMapping("/{statusId}")
     public ResponseEntity<ApiResponse<SettlementStatusResponse.SettlementStatusDTO>> getSettlementStatus(@PathVariable Long statusId) {
