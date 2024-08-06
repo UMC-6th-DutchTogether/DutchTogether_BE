@@ -13,6 +13,6 @@ import java.util.Optional;
 @Repository
 public interface SettlementSettlerRepository extends JpaRepository<SettlementSettler, Long> {
     List<SettlementSettler> findAllBySettlementIdAndStatus(Long settlementId, Status status);
-    Optional<SettlementSettler> findBySettlementIdAndSettlerName(Long settlementId, String settlerName);
+    Optional<SettlementSettler> findBySettlementAndSettler(Settlement settlement, Settler settler);
     boolean existsBySettlementIdAndSettlerName(Long settlementId, String settlerName);
 }

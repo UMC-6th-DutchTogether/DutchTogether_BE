@@ -11,7 +11,6 @@ import lombok.*;
 @Getter
 @Setter//추가했음
 @Builder
-//@UniqueSettler //에러
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class SettlementSettler extends BaseEntity {

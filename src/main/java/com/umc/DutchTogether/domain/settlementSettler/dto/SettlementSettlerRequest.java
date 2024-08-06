@@ -1,5 +1,6 @@
 package com.umc.DutchTogether.domain.settlementSettler.dto;
 
+import com.umc.DutchTogether.global.validation.annotation.ExistSettlement;
 import com.umc.DutchTogether.global.validation.annotation.UniqueSettler;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -13,8 +14,10 @@ public class SettlementSettlerRequest {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    @UniqueSettler
     @Schema(title = "정산 완료하기 DTO")
     public static class SettlementSettlerDTO {
+        @ExistSettlement
         private Long settlementId;
         private String settlerName;
         private String status;
