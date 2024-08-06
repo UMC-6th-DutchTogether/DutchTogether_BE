@@ -5,6 +5,8 @@ import com.umc.DutchTogether.domain.payer.dto.PayerRequest;
 import com.umc.DutchTogether.domain.payer.dto.PayerResponse;
 import com.umc.DutchTogether.domain.payer.entity.Payer;
 import com.umc.DutchTogether.domain.payer.repository.PayerRepository;
+import com.umc.DutchTogether.domain.settlement.entity.Settlement;
+import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 public class PayerCommandServiceImpl implements PayerCommandService{
 
     private final PayerRepository payerRepository;
+    private final SettlementRepository settlementRepository;
 
     @Override
     public PayerResponse.PayerListDTO createPayer(PayerRequest.PayerListDTO request) {
@@ -28,23 +32,47 @@ public class PayerCommandServiceImpl implements PayerCommandService{
         List<PayerResponse.PayerDTO> payersResponse = payers.stream()
                 .map(payerDTO-> {
                     Payer  payer = PayerConverter.toPayer(payerDTO);
-                    if (checkPayer(payer)){
+                    Optional<Payer> existingPayer = checkPayer(payer);
+                    if (existingPayer.isPresent()) {
+                        createSettlement(existingPayer.get());
                         return null;
                     }
-                    Payer savedPayer = payerRepository.save(payer);
+                    Payer savedPayer = saveNewPayer(payer);
+                    createSettlement(savedPayer);
                     return PayerConverter.toPayerDTO(savedPayer);
                 })
                 .filter(Objects::nonNull) // null 값을 필터링하여 제거
                 .collect(Collectors.toList());
-
         return PayerResponse.PayerListDTO.builder()
                 .payers(payersResponse)
                 .build();
     }
 
-    //해당 결제자가 이미 있는 경우 (한 결제자가 2개 이상의 정산하기와 연결되어 있는 경우)
-    public boolean checkPayer(Payer payer) {
-        return payerRepository.existsByNameAndAccountNumAndBank(
+
+    private void createSettlement(Payer payer) {
+        Settlement settlement = Settlement.builder()
+                .payer(payer)
+                .build();
+        try {
+            settlementRepository.save(settlement);
+        } catch (Exception e) {
+            // 예외 처리 로직 추가
+            throw new RuntimeException("Failed to save settlement", e);
+        }
+    }
+
+    // 새로은 payer 저장 메소드
+    private Payer saveNewPayer(Payer payer) {
+        try {
+            return payerRepository.save(payer);
+        } catch (Exception e) {
+            // 예외 처리 로직 추가
+            throw new RuntimeException("Failed to save new payer", e);
+        }
+    }
+    // 해당 결제자가 이미 있는지 확인
+    public Optional<Payer> checkPayer(Payer payer) {
+        return payerRepository.findByNameAndAccountNumAndBank(
                 payer.getName(), payer.getAccountNum(), payer.getBank());
     }
 }

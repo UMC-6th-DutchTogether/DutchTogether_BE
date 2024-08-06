@@ -19,7 +19,10 @@ public class PayerRequest {
     @Schema(title = "결제자 생성 요청 DTO")
     public static class PayerListDTO {
         @NotNull
-        private List<PayerDTO> payers;    }
+        private List<PayerDTO> payers;
+
+        private Long meetingNum;
+    }
 
     @Builder
     @Getter
