@@ -13,7 +13,6 @@ import lombok.*;
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class SettlementSettler extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,5 +27,4 @@ public class SettlementSettler extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
 }

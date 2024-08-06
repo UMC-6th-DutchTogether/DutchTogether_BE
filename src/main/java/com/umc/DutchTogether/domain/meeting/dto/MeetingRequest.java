@@ -15,7 +15,7 @@ public class MeetingRequest {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-//    @ValidateMeeting
+    @ValidateMeeting
     @Schema(title = "모임 생성 요청 DTO")
     public static class MeetingDT0{
         private String meetingId;
