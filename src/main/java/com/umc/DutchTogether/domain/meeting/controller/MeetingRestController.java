@@ -10,10 +10,8 @@ import com.umc.DutchTogether.global.validation.annotation.ExistMeeting;
 import com.umc.DutchTogether.global.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Validated
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/meetings")
@@ -39,5 +37,4 @@ public class MeetingRestController {
         MeetingResponse.SingleSettlementResultDTO meeting = meetingQueryService.getSingleSettlement(link);
         return ApiResponse.onSuccess(meeting);
     }
-
 }

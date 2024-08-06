@@ -37,20 +37,23 @@ public class SettlementStatusQueryServiceImpl implements SettlementStatusQuerySe
     //정산 현황 보기 page 정보 전달
     @Override
     public SettlementStatusResponse.SettlementStatusDTO getStatus(Long meetingId) {
+
         Settlement settlement = settlementRepository.findByMeetingId(meetingId).orElse(null);
         Meeting meeting = meetingRepository.findById(meetingId).orElse(null);
-//      Payer payer = settlement.getPayer();
-//      SettlementStatus settlementStatus = settlement.getSettlementStatus();
         Payer payer = payerRepository.findById(settlement.getPayer().getId()).orElse(null);
         SettlementStatus settlementStatus = settlementStatusRepository.findById(settlement.getSettlementStatus().getId()).orElse(null);
+
         List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList = getSettlers(settlement.getId());
+
         return SettlementStatusConverter.toSettlementStatusDTO(settlement,settlementStatus,meeting,payer,settlersDTOList);
     }
 
 
     // 정산 완료 인원을 리스트에 dto(name,updateAt)로 담는 메소드
     public List<SettlementStatusResponse.SettlementSettlersDTO> getSettlers(Long settlementId){
+
         List<SettlementSettler> settlementSettlers = settlementSettlerRepository.findAllBySettlementIdAndStatus(settlementId, Status.COMPLETED);
+
         return settlementSettlers.stream()
                 .map(settlementSettler -> settlementSettlersDTO(settlementSettler.getSettler()))
                 .collect(Collectors.toList());
