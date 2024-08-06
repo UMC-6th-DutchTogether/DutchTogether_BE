@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.MEETING_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -30,7 +32,8 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
 
     @Override
     public Meeting getMeeting(Long meetingNum) {
-        return meetingRepository.findById(meetingNum).orElse(null);
+        return meetingRepository.findById(meetingNum)
+                .orElseThrow(() -> new MeetingHandler(MEETING_NOT_FOUND));
     }
 
     @Override

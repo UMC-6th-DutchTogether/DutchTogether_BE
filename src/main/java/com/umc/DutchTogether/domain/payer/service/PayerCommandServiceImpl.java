@@ -83,6 +83,7 @@ public class PayerCommandServiceImpl implements PayerCommandService{
             throw new RuntimeException("Failed to save new payer", e);
         }
     }
+
     // 해당 결제자가 이미 있는지 확인
     public Optional<Payer> checkPayer(Payer payer) {
         return payerRepository.findByNameAndAccountNumAndBank(
