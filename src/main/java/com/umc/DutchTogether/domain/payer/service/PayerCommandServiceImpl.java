@@ -1,5 +1,7 @@
 package com.umc.DutchTogether.domain.payer.service;
 
+import com.umc.DutchTogether.domain.meeting.entity.Meeting;
+import com.umc.DutchTogether.domain.meeting.repository.MeetingRepository;
 import com.umc.DutchTogether.domain.payer.converter.PayerConverter;
 import com.umc.DutchTogether.domain.payer.dto.PayerRequest;
 import com.umc.DutchTogether.domain.payer.dto.PayerResponse;
@@ -25,7 +27,11 @@ public class PayerCommandServiceImpl implements PayerCommandService{
 
     private final PayerRepository payerRepository;
     private final SettlementRepository settlementRepository;
+    private final MeetingRepository meetingRepository;
 
+    /*
+    ##예외처리 바꿀 예정##
+     */
     @Override
     public PayerResponse.PayerListDTO createPayer(PayerRequest.PayerListDTO request) {
         List<PayerRequest.PayerDTO> payers = request.getPayers();
@@ -34,11 +40,11 @@ public class PayerCommandServiceImpl implements PayerCommandService{
                     Payer  payer = PayerConverter.toPayer(payerDTO);
                     Optional<Payer> existingPayer = checkPayer(payer);
                     if (existingPayer.isPresent()) {
-                        createSettlement(existingPayer.get());
+                        createSettlement(existingPayer.get(), request.getMeetingNum());
                         return null;
                     }
                     Payer savedPayer = saveNewPayer(payer);
-                    createSettlement(savedPayer);
+                    createSettlement(savedPayer,request.getMeetingNum());
                     return PayerConverter.toPayerDTO(savedPayer);
                 })
                 .filter(Objects::nonNull) // null 값을 필터링하여 제거
@@ -48,9 +54,16 @@ public class PayerCommandServiceImpl implements PayerCommandService{
                 .build();
     }
 
-
-    private void createSettlement(Payer payer) {
+    //정산하기 생성 메소드
+    private void createSettlement(Payer payer, Long meetingNum) {
+        Meeting meeting;
+        try {
+            meeting = meetingRepository.findById(meetingNum).orElseThrow(() -> new RuntimeException("Meeting not found with id: " + meetingNum));
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find meetingNum", e);
+        }
         Settlement settlement = Settlement.builder()
+                .meeting(meeting)
                 .payer(payer)
                 .build();
         try {
