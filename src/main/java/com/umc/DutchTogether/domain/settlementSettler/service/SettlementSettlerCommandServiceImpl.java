@@ -28,16 +28,22 @@ public class SettlementSettlerCommandServiceImpl implements SettlementSettlerCom
 
     @Override
     public SettlementSettlerResponse.SettlementSettlerResultDTO updateStatus(SettlementSettlerRequest.SettlementSettlerDTO request) {
-        Settlement settlement = settlementRepository.findById(request.getSettlementId())
-                .orElseThrow(() -> new EntityNotFoundException("Settlement not found"));
+        Settlement settlement = settlementRepository.findById(request.getSettlementId()).orElse(null);;
 
-        Settler settler = settlerRepository.findByName(request.getSettlerName())
+        Long meetingId = settlement.getMeeting().getId();
+
+        // meetingId와 settlerName으로 Settler를 조회, 없으면 새로 생성
+        Settler settler = settlerRepository.findByMeetingIdAndSettlerName(meetingId, request.getSettlerName())
                 .orElseGet(() -> settlerRepository.save(Settler.builder()
                         .name(request.getSettlerName())
                         .build()));
 
-        SettlementSettler settlementSettler = settlementSettlerRepository.findBySettlementIdAndSettlerName(settlement.getId(), settler.getName())
-                .orElseGet(() -> SettlementSettlerConverter.toSettlementSettlerDTO(settlement, settler));
+        // settlement와 settler로 새로운 SettlementSettler 객체 생성
+        SettlementSettler settlementSettler = settlementSettlerRepository.findBySettlementAndSettler(settlement, settler)
+                .orElseGet(() -> SettlementSettler.builder()
+                        .settlement(settlement)
+                        .settler(settler)
+                        .build());
 
         settlementSettlerRepository.save(settlementSettler);
 

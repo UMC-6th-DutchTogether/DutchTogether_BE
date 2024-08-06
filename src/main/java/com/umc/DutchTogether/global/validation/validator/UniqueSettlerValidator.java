@@ -1,6 +1,6 @@
 package com.umc.DutchTogether.global.validation.validator;
 
-import com.umc.DutchTogether.domain.settlementSettler.entity.SettlementSettler;
+import com.umc.DutchTogether.domain.settlementSettler.dto.SettlementSettlerRequest;
 import com.umc.DutchTogether.domain.settlementSettler.repository.SettlementSettlerRepository;
 import com.umc.DutchTogether.global.validation.annotation.UniqueSettler;
 import jakarta.validation.ConstraintValidator;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UniqueSettlerValidator implements ConstraintValidator<UniqueSettler, SettlementSettler> {
+public class UniqueSettlerValidator implements ConstraintValidator<UniqueSettler, SettlementSettlerRequest.SettlementSettlerDTO> {
 
     private final SettlementSettlerRepository settlementSettlerRepository;
 
@@ -19,13 +19,13 @@ public class UniqueSettlerValidator implements ConstraintValidator<UniqueSettler
     }
 
     @Override
-    public boolean isValid(SettlementSettler settlementSettler, ConstraintValidatorContext context) {
-        if (settlementSettler == null) {
+    public boolean isValid(SettlementSettlerRequest.SettlementSettlerDTO request, ConstraintValidatorContext context) {
+        if (request == null) {
             return true;
         }
 
-        Long settlementId = settlementSettler.getSettlement().getId();
-        String settlerName = settlementSettler.getSettler().getName();
+        Long settlementId = request.getSettlementId();
+        String settlerName = request.getSettlerName();
 
         boolean settlerExists = settlementSettlerRepository.existsBySettlementIdAndSettlerName(settlementId, settlerName);
 
