@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,13 +28,23 @@ public class PayerCommandServiceImpl implements PayerCommandService{
         List<PayerResponse.PayerDTO> payersResponse = payers.stream()
                 .map(payerDTO-> {
                     Payer  payer = PayerConverter.toPayer(payerDTO);
+                    if (checkPayer(payer)){
+                        return null;
+                    }
                     Payer savedPayer = payerRepository.save(payer);
                     return PayerConverter.toPayerDTO(savedPayer);
                 })
+                .filter(Objects::nonNull) // null 값을 필터링하여 제거
                 .collect(Collectors.toList());
 
         return PayerResponse.PayerListDTO.builder()
                 .payers(payersResponse)
                 .build();
+    }
+
+    //해당 결제자가 이미 있는 경우 (한 결제자가 2개 이상의 정산하기와 연결되어 있는 경우)
+    public boolean checkPayer(Payer payer) {
+        return payerRepository.existsByNameAndAccountNumAndBank(
+                payer.getName(), payer.getAccountNum(), payer.getBank());
     }
 }

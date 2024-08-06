@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface PayerRepository extends JpaRepository<Payer, Long> {
-        List<Payer> findByNameContainingIgnoreCase(String name);
+        boolean existsByNameAndAccountNumAndBank(String name, Long accountNum, String bank);
+
 }
