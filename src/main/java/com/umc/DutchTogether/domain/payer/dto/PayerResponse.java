@@ -26,4 +26,14 @@ public class PayerResponse {
     public static class PayerDTO{
         private Long payerId;
     }
+
+    // 위 아래 뭐가 좋을지 모르겠음
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "결제자 이름 응답 DTO")
+    public static class PayerNameListDTO{
+        private List<String> names;
+    }
 }

@@ -33,7 +33,7 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
     public SettlementResponse.SettlementDTO CreateSingleSettlement(SettlementRequest.SettlementDTO request) {
         Optional<Meeting> meeting = meetingRepository.findById(request.getMeetingNum());
 
-        // 결제자 저장
+        // 결제자 저장 ( 여유되면 converter에 다 넣자)
         Payer payer = Payer.builder()
                 .name(request.getPayer())
                 .accountNum(request.getAccountNumber())
