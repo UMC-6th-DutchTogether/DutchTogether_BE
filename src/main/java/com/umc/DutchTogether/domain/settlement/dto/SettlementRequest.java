@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class SettlementRequest {
     @Builder
     @Getter
@@ -43,5 +45,26 @@ public class SettlementRequest {
         @Min(value = 2, message = "정산 인원은 최소 2명 입니다.")
         @Max(value = 10, message = "정산 인원은 최대 10명 입니다.")
         private int numPeople;
+    }
+
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "정산하기 생성 요청 DTO")
+    public static class SettlementInfoListDTO{
+        private List<SettlementInfoDTO> settlementInfoList;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "정산하기 생성 요청 DTO")
+    public static class SettlementInfoDTO{
+        private String item;
+        private Long settlementId;
+        private int totalAmount;
     }
 }

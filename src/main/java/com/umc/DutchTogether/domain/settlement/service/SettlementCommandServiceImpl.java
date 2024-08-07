@@ -17,7 +17,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.SETTLEMENT_NOT_FOUND_ID;
 
 @Service
 @RequiredArgsConstructor
@@ -55,4 +59,23 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
 
         return SettlementConverter.toSettlementDTO(settlement);
     }
+
+    @Override
+    public Boolean updateSettlement(SettlementRequest.SettlementInfoListDTO request) {
+        List<SettlementRequest.SettlementInfoDTO> infoList = request.getSettlementInfoList();
+
+        infoList.forEach(dto -> {
+            Settlement settlement = settlementRepository.findById(dto.getSettlementId())
+                    .orElseThrow(() -> new SettlementHandler(SETTLEMENT_NOT_FOUND_ID));
+
+            // 기존 엔티티 업데이트
+            settlement.setItems(dto.getItem());
+            settlement.setTotalAmount(dto.getTotalAmount());
+
+            settlementRepository.save(settlement);
+        });
+
+        return true;
+    }
+
 }
