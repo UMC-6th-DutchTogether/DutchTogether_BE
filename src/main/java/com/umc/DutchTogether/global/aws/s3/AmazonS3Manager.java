@@ -18,6 +18,9 @@ public class AmazonS3Manager{
 
     private final UuidRepository uuidRepository;
 
-
     public String uploadFile(String keyName, MultipartFile file){ return null;}
+
+    public String generateReceiptKeyName(Uuid uuid) {
+        return amazonConfig.getReceiptPath() + '/' + uuid.getUuid();
+    }
 }
