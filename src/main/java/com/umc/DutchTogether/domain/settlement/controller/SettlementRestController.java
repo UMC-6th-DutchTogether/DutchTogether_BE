@@ -13,24 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/settlement")
 public class SettlementRestController {
-
-
     private final SettlementCommandService settlementCommandService;
-    //    @PostMapping("/single")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Object createSingleSettlement(@Validated @RequestBody SingleSettlementCreateRequestDto request, BindingResult bindingResult) {
-//
-//        // 유효성 검사 실패 시 에러 처리
-//        if (bindingResult.hasErrors()) {
-//            String errorMessage = ValidationUtils.getFirstErrorMessage(bindingResult);
-//            return errorMessage;
-//        }
-//
-//        SingleSettlementCreateResponseDto settlement = settlementService.createSettlement(request);
-//
-//
-//        return settlement;
-//    }
 
     @PostMapping("/single")
     public ApiResponse<SettlementResponse.SettlementDTO> createSingleSettlement(@RequestBody @Valid SettlementRequest.SettlementDTO request) {
@@ -38,11 +21,9 @@ public class SettlementRestController {
         return ApiResponse.onSuccess(settlement);
     }
 
-
-//    @GetMapping("/single/info")
-//    public ApiResponse<SettlementResponse.SettlementDTO> getMeeting(@RequestParam("settlementId") Long settlementId) {
-//
-//        return ApiResponse.onSuccess(settlement);
-//    }
-
+    @PutMapping("/")
+    public ApiResponse<Boolean> updateSettlement(@RequestBody @Valid SettlementRequest.SettlementInfoListDTO request){
+        Boolean result = settlementCommandService.updateSettlement(request);
+        return ApiResponse.onSuccess(result);
+    }
 }
