@@ -45,5 +45,6 @@ public class Settlement extends BaseEntity {
 
     @Column(name = "total_amount", nullable = false)
     private int totalAmount;
-    //타입 같이 정한 후 영수증 추가해야함 !
+
+    private String receiptImageUrl;
 }
