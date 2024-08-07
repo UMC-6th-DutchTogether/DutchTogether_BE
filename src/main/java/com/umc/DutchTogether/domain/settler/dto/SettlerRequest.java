@@ -17,6 +17,16 @@ public class SettlerRequest {
     @AllArgsConstructor
     @Schema(title = "정산자 생성 요청 DTO")
     public static  class SettlerRequestDTO{
-        private List<String> names;
+        private List<SettlerSettlementsDTO> requests;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "정산자 생성 요청 DTO")
+    public static  class SettlerSettlementsDTO{
+        private String name;
+        private Long settlementId;
     }
 }

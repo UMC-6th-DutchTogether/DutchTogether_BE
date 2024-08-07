@@ -44,4 +44,14 @@ public class SettlementRequest {
         @Max(value = 10, message = "정산 인원은 최대 10명 입니다.")
         private int numPeople;
     }
+
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "정산하기 생성 요청 DTO")
+    public static class SettlementInfoListDTO{
+
+    }
 }
