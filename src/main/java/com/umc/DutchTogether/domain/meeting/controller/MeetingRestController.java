@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/meetings")
 public class MeetingRestController {
+    // test 할게요
 
     private final MeetingCommandService meetingCommandService;
     private final MeetingQueryService meetingQueryService;
