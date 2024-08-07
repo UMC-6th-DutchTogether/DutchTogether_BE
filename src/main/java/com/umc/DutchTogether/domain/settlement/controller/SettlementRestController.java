@@ -22,7 +22,8 @@ public class SettlementRestController {
     }
 
     @PutMapping("/")
-    public ApiResponse<Void> updateSettlement(){
-        return ApiResponse.onSuccess(null);
+    public ApiResponse<Boolean> updateSettlement(@RequestBody @Valid SettlementRequest.SettlementInfoListDTO request){
+        Boolean result = settlementCommandService.updateSettlement(request);
+        return ApiResponse.onSuccess(result);
     }
 }

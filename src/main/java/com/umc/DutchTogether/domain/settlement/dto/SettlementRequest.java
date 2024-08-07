@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class SettlementRequest {
     @Builder
     @Getter
@@ -52,6 +54,17 @@ public class SettlementRequest {
     @AllArgsConstructor
     @Schema(title = "정산하기 생성 요청 DTO")
     public static class SettlementInfoListDTO{
+        private List<SettlementInfoDTO> settlementInfoList;
+    }
 
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "정산하기 생성 요청 DTO")
+    public static class SettlementInfoDTO{
+        private String item;
+        private Long settlementId;
+        private int totalAmount;
     }
 }
