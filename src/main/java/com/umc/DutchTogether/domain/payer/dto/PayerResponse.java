@@ -36,7 +36,6 @@ public class PayerResponse {
     public static class PayerNameListDTO{
         private List<PayerNameDTO> names;
     }
-    //DTO에 정산하기 ID도 추가해야될듯?
 
     @Builder
     @Getter
