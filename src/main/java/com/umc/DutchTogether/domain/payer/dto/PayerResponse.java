@@ -34,6 +34,18 @@ public class PayerResponse {
     @AllArgsConstructor
     @Schema(title = "결제자 이름 응답 DTO")
     public static class PayerNameListDTO{
-        private List<String> names;
+        private List<PayerNameDTO> names;
     }
+    //DTO에 정산하기 ID도 추가해야될듯?
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "결제자 이름,정산하기Id DTO")
+    public static class PayerNameDTO{
+        private String name;
+        private Long settlementId;
+    }
+
 }

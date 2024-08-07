@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SettlerRestController {
 
     @PostMapping("/")
-    public ApiResponse<Boolean> createSettler(@RequestBody SettlerRequest.SettlerRequestDTO request) {
+    public ApiResponse<Void> createSettler(@RequestBody SettlerRequest.SettlerRequestDTO request) {
 
         return ApiResponse.onSuccess(null);
     }

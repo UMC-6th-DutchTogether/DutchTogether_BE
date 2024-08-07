@@ -24,14 +24,15 @@ import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.SE
 public class PayerQueryServiceImpl implements PayerQueryService{
 
     private final SettlementRepository settlementRepository;
-    private final PayerRepository payerRepository;
 
     @Override
     public PayerResponse.PayerNameListDTO getPayerList(Long meetingNum) {
         List<Settlement> settlementList = getSettlementList(meetingNum);
-        List<String> payerNames = settlementList.stream()
-                .map(Settlement::getPayer)
-                .map(Payer::getName)
+        List<PayerResponse.PayerNameDTO> payerNames = settlementList.stream()
+                .map(settlement -> PayerResponse.PayerNameDTO.builder()
+                        .name(settlement.getPayer().getName())
+                        .settlementId(settlement.getId())
+                        .build())
                 .collect(Collectors.toList());
 
         return PayerResponse.PayerNameListDTO.builder()
