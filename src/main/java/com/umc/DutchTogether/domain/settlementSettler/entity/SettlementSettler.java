@@ -3,6 +3,7 @@ package com.umc.DutchTogether.domain.settlementSettler.entity;
 import com.umc.DutchTogether.domain.settler.entity.Settler;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.global.common.BaseEntity;
+import com.umc.DutchTogether.global.validation.annotation.UniqueSettler;
 import jakarta.persistence.*;
 import lombok.*;
 
