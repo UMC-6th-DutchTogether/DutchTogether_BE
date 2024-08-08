@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class AmazonConfig {
 
-
     private AWSCredentials awsCredentials;
 
     @Value("${cloud.aws.credentials.accessKey}")
@@ -27,6 +26,9 @@ public class AmazonConfig {
 
     @Value("${cloud.aws.region.static}")
     private String region;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Value("${cloud.aws.s3.path.receipt}")
     private String receiptPath;
