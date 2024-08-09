@@ -18,6 +18,7 @@ public interface SettlementSettlerRepository extends JpaRepository<SettlementSet
     Optional<SettlementSettler> findBySettlementAndSettler(Settlement settlement, Settler settler);
     boolean existsBySettlementIdAndSettlerName(Long settlementId, String settlerName);
     List<SettlementSettler> findAllBySettlerId(Long SettlerId);
+    SettlementSettler findBySettlementIdAndSettlerName(Long settlementId, String settlerName);
 
     @Query("SELECT ss.settler.id FROM SettlementSettler ss WHERE ss.settlement.id = :settlementId")
     List<Long> findAllSettlerIdBySettlementId(@Param("settlementId") Long settlementId);
