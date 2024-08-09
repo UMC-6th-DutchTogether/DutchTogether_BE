@@ -3,8 +3,8 @@ package com.umc.DutchTogether.domain.settlementStatus.converter;
 import com.umc.DutchTogether.domain.meeting.entity.Meeting;
 import com.umc.DutchTogether.domain.payer.entity.Payer;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
+import com.umc.DutchTogether.domain.settlementSettler.entity.SettlementSettler;
 import com.umc.DutchTogether.domain.settlementStatus.dto.SettlementStatusResponse;
-import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 import com.umc.DutchTogether.domain.settler.entity.Settler;
 
 import java.util.List;
@@ -39,9 +39,11 @@ public class SettlementStatusConverter {
                 .build();
     }
 
-    public static SettlementStatusResponse.SettlementSettlersDTO settlementSettlersDTO(Settler settler){
+    public static SettlementStatusResponse.SettlementSettlersDTO toSettlementSettlersDTO(SettlementSettler settlementSettler){
+        Settler settler = settlementSettler.getSettler();
+
         return SettlementStatusResponse.SettlementSettlersDTO.builder()
-                .settlementTime(settler.getUpdatedAt())
+                .settlementTime(settlementSettler.getUpdatedAt())
                 .name(settler.getName())
                 .build();
     }

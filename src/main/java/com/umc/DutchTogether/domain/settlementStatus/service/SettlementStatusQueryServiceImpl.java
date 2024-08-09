@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.umc.DutchTogether.domain.settlementStatus.converter.SettlementStatusConverter.settlementSettlersDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -66,13 +65,25 @@ public class SettlementStatusQueryServiceImpl implements SettlementStatusQuerySe
         return SettlementStatusConverter.toSettlementStatusDTO(meeting, settlementDTOList);
     }
 
+    @Override
+    public SettlementStatusResponse.SettlementSettlersDTO findSettler(Long settlementId, String settlerName) {
+
+        SettlementSettler settlementSettler = settlementSettlerRepository.findBySettlementIdAndSettlerName(settlementId, settlerName);
+
+        if (settlementSettler == null) {
+            return null;
+        }
+
+        return SettlementStatusConverter.toSettlementSettlersDTO(settlementSettler);
+    }
+
     // 정산 완료 인원을 리스트에 dto(name,updateAt)로 담는 메소드
     public List<SettlementStatusResponse.SettlementSettlersDTO> getSettlers(Long settlementId){
 
         List<SettlementSettler> settlementSettlers = settlementSettlerRepository.findAllBySettlementIdAndStatus(settlementId, Status.COMPLETED);
 
         return settlementSettlers.stream()
-                .map(settlementSettler -> settlementSettlersDTO(settlementSettler.getSettler()))
+                .map(settlementSettler -> SettlementStatusConverter.toSettlementSettlersDTO(settlementSettler))
                 .collect(Collectors.toList());
     }
 }
