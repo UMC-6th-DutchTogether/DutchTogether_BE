@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.umc.DutchTogether.domain.receipt.converter.ReceiptConverter;
 import com.umc.DutchTogether.domain.receipt.dto.ReceiptResponse;
+import com.umc.DutchTogether.domain.receipt.entity.Receipt;
 import com.umc.DutchTogether.domain.receipt.repository.ReceiptRepository;
 import com.umc.DutchTogether.global.aws.s3.AmazonS3Manager;
+import com.umc.DutchTogether.global.aws.s3.Uuid;
 import com.umc.DutchTogether.global.aws.s3.UuidRepository;
 import com.umc.DutchTogether.global.clova.OCRService;
 import jakarta.transaction.Transactional;
@@ -18,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -76,8 +79,21 @@ public class ReceiptCommandServiceImpl implements ReceiptCommandService {
 
         int totalAmount = Integer.parseInt(totalPrice.replaceAll("[^0-9]", ""));
 
-        String receiptId = "id";
+        String uuid = UUID.randomUUID().toString();
+        Uuid savedUuid = uuidRepository.save(Uuid.builder().uuid(uuid).build());
 
-        return ReceiptConverter.toReceiptResponseDTO(receiptId, items, totalAmount);
+        String imageUrl;
+
+        try {
+            imageUrl = s3Manager.uploadFile(s3Manager.generateReceiptKeyName(savedUuid), file);
+        } catch (Exception e) {
+            throw new RuntimeException("S3 upload error", e);
+        }
+
+        Receipt receipt = ReceiptConverter.toReceipt(imageUrl);
+
+        receiptRepository.save(receipt);
+
+        return ReceiptConverter.toReceiptResponseDTO(receipt.getId(), items, totalAmount);
     }
 }

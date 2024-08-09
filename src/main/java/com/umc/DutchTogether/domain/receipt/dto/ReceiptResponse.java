@@ -13,7 +13,7 @@ public class ReceiptResponse {
     @AllArgsConstructor
     @Schema(title = "영수증 인식 응답 DTO")
     public static class ReceiptResponseDTO {
-        private String receiptId;
+        private Long receiptId;
         private String items;
         private int totalAmount;
     }

@@ -13,7 +13,7 @@ public class ReceiptConverter {
                 .build();
     }
 
-    public static ReceiptResponse.ReceiptResponseDTO toReceiptResponseDTO(String receiptId, List<String> items, int totalAmount) {
+    public static ReceiptResponse.ReceiptResponseDTO toReceiptResponseDTO(Long receiptId, List<String> items, int totalAmount) {
         String itemsString = String.join(", ", items);
         return ReceiptResponse.ReceiptResponseDTO.builder()
                 .receiptId(receiptId)
