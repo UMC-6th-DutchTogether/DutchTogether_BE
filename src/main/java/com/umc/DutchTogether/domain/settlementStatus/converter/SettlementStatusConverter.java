@@ -18,19 +18,30 @@ public class SettlementStatusConverter {
                 .build();
     }
 
-    public static SettlementStatusResponse.SettlementStatusDTO toSettlementStatusDTO(Settlement settlement, SettlementStatus settlementStatus , Meeting meeting, Payer payer, List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList){
+    public static SettlementStatusResponse.SettlementStatusDTO toSettlementStatusDTO(Meeting meeting, List<SettlementStatusResponse.SettlementListDTO> settlementDTOList){
         return SettlementStatusResponse.SettlementStatusDTO.builder()
                 .meetingName(meeting.getName())
-                .payer(payer.getName())
-                .completedNum(settlementStatus.getCompletedPeople())
+                .settlementListDTO(settlementDTOList)
+                .build();
+    }
+
+    public static SettlementStatusResponse.SettlementListDTO toSettlementListDTO(Settlement settlement, List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList){
+        Payer payer = settlement.getPayer();
+
+        int completedNum = settlersDTOList.size();
+
+        return SettlementStatusResponse.SettlementListDTO.builder()
+                .settlementId(settlement.getId())
                 .numPeople(settlement.getNumPeople())
-                .settlementStatusDTOList(settlersDTOList)
+                .completedNum(completedNum)
+                .payer(payer.getName())
+                .completedSettler(settlersDTOList)
                 .build();
     }
 
     public static SettlementStatusResponse.SettlementSettlersDTO settlementSettlersDTO(Settler settler){
         return SettlementStatusResponse.SettlementSettlersDTO.builder()
-                .updateAt(settler.getUpdatedAt())
+                .settlementTime(settler.getUpdatedAt())
                 .name(settler.getName())
                 .build();
     }

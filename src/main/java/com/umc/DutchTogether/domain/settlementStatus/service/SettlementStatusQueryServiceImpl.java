@@ -52,20 +52,19 @@ public class SettlementStatusQueryServiceImpl implements SettlementStatusQuerySe
             throw new SettlementHandler(ErrorStatus.SETTLEMENT_NOT_FOUND_ID);
         }
 
-        Settlement firstSettlement = settlements.get(0);
-        Payer payer = payerRepository.findById(firstSettlement.getPayer().getId())
-                .orElseThrow(() -> new PayerHandler(ErrorStatus.Payer_NOT_FOUND_BY_SETTLEMENTID));
-        SettlementStatus settlementStatus = settlementStatusRepository.findById(firstSettlement.getSettlementStatus().getId())
-                .orElseThrow(() -> new SettlementHandler(ErrorStatus.SETTLEMENT_STATUS_NOT_FOUND));
+        List<SettlementStatusResponse.SettlementListDTO> settlementDTOList = settlements.stream()
+                .map(settlement -> {
+                    SettlementStatus settlementStatus = settlementStatusRepository.findById(settlement.getSettlementStatus().getId())
+                            .orElseThrow(() -> new SettlementHandler(ErrorStatus.SETTLEMENT_STATUS_NOT_FOUND));
 
-        List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList = new ArrayList<>();
-        for (Settlement settlement : settlements) {
-            settlersDTOList.addAll(getSettlers(settlement.getId()));
-        }
+                    List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList = getSettlers(settlement.getId());
 
-        return SettlementStatusConverter.toSettlementStatusDTO(firstSettlement, settlementStatus, meeting, payer, settlersDTOList);
+                    return SettlementStatusConverter.toSettlementListDTO(settlement, settlersDTOList);
+                })
+                .collect(Collectors.toList());
+
+        return SettlementStatusConverter.toSettlementStatusDTO(meeting, settlementDTOList);
     }
-
 
     // 정산 완료 인원을 리스트에 dto(name,updateAt)로 담는 메소드
     public List<SettlementStatusResponse.SettlementSettlersDTO> getSettlers(Long settlementId){

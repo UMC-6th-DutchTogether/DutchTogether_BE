@@ -21,6 +21,7 @@ public class TokenProvider {
 
     public String createToken(Meeting meeting) {
         Date expiryDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
+        log.info("Creating token for meeting ID: {}", meeting.getMeetingId());
         return Jwts.builder()
                 .signWith(secretKey)  // 생성된 비밀 키로 서명
                 .setSubject(meeting.getMeetingId().toString())
@@ -31,11 +32,16 @@ public class TokenProvider {
     }
 
     public String validateAndGetUserId(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.getSubject();
+        } catch (Exception e) {
+            log.error("JWT validation failed: {}", e.getMessage());
+            throw new RuntimeException("Invalid JWT token");
+        }
     }
 }
