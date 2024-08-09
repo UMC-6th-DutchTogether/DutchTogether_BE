@@ -38,5 +38,6 @@ public class MeetingResponse {
         private String bank;
         private int total_amount;
         private int num_people;
+        private String receiptUrl;
     }
 }

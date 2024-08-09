@@ -6,18 +6,14 @@ import com.umc.DutchTogether.domain.meeting.entity.Meeting;
 import com.umc.DutchTogether.domain.meeting.repository.MeetingRepository;
 import com.umc.DutchTogether.domain.payer.entity.Payer;
 import com.umc.DutchTogether.domain.payer.repository.PayerRepository;
-import com.umc.DutchTogether.domain.settlement.converter.SettlementConverter;
-import com.umc.DutchTogether.domain.settlement.dto.SettlementResponse;
+import com.umc.DutchTogether.domain.receipt.entity.Receipt;
+import com.umc.DutchTogether.domain.receipt.repository.ReceiptRepository;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
-import com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
-import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.MEETING_NOT_FOUND;
 
@@ -29,6 +25,7 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
     private final MeetingRepository meetingRepository;
     private final SettlementRepository settlementRepository;
     private final PayerRepository payerRepository;
+    private final ReceiptRepository receiptRepository;
 
     @Override
     public Meeting getMeeting(Long meetingNum) {
@@ -41,6 +38,7 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
         Meeting meeting = meetingRepository.findByLink("" + link).orElse(null);
         Settlement settlement = settlementRepository.findByMeetingId(meeting.getId()).orElse(null);
         Payer payer = payerRepository.findById(settlement.getPayer().getId()).orElse(null);
-        return MeetingConverter.toSingleSettlementResultDTO(meeting, settlement, payer);
+        Receipt receipt = receiptRepository.findById(settlement.getReceipt().getId()).orElse(null);
+        return MeetingConverter.toSingleSettlementResultDTO(meeting, settlement, payer, receipt);
     }
 }

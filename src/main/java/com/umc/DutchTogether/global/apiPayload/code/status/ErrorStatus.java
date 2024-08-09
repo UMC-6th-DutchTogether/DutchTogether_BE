@@ -30,6 +30,9 @@ public enum ErrorStatus implements BaseErrorCode {
     // 결제자 관련 에러
     Payer_NOT_FOUND_BY_SETTLEMENTID(HttpStatus.NOT_FOUND,"PAYER4004","Payer를 찾을 수 없습니다."),
 
+    // 영수증 관련 에러
+    RECEIPT_NOT_FOUND(HttpStatus.NOT_FOUND,"RECEIPT4004","영수증을 찾을 수 없습니다."),
+
     // 정산현황 관련 에러
     SETTLEMENT_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND,"SETTLEMENTSTATUS4004","정산 현황을 찾을 수 없습니다.");
 
