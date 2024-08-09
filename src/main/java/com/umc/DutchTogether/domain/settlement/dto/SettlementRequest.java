@@ -1,6 +1,7 @@
 package com.umc.DutchTogether.domain.settlement.dto;
 
 import com.umc.DutchTogether.global.validation.annotation.ExistMeeting;
+import com.umc.DutchTogether.global.validation.annotation.ExistReceipt;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -38,13 +39,16 @@ public class SettlementRequest {
 
         @NotNull(message = "정산하는 금액을 입력해 주세요.")
         @Min(value = 1000, message = "정산 금액은 1,000 원 이상이어야 합니다.")
-        @Max(value = 1000000, message = "정산 금액은 최대 1,000,000 원 입니다.")
+        @Max(value = 10000000, message = "정산 금액은 최대 10,000,000 원 입니다.")
         private int totalAmount;
 
         @NotNull(message = "정산하는 인원의 수를 입력해주세요.")
         @Min(value = 2, message = "정산 인원은 최소 2명 입니다.")
-        @Max(value = 10, message = "정산 인원은 최대 10명 입니다.")
+        @Max(value = 100, message = "정산 인원은 최대 100명 입니다.")
         private int numPeople;
+
+        @ExistReceipt
+        private Long receiptId;
     }
 
 
@@ -66,5 +70,7 @@ public class SettlementRequest {
         private String item;
         private Long settlementId;
         private int totalAmount;
+        @ExistReceipt
+        private Long receiptId;
     }
 }

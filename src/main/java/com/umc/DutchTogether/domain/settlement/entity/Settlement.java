@@ -1,6 +1,7 @@
 package com.umc.DutchTogether.domain.settlement.entity;
 
 import com.umc.DutchTogether.domain.payer.entity.Payer;
+import com.umc.DutchTogether.domain.receipt.entity.Receipt;
 import com.umc.DutchTogether.domain.settlementSettler.entity.SettlementSettler;
 import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 import com.umc.DutchTogether.global.common.BaseEntity;
@@ -46,5 +47,7 @@ public class Settlement extends BaseEntity {
     @Column(name = "total_amount", nullable = false)
     private int totalAmount;
 
-    private String receiptImageUrl;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receipt_id")
+    private Receipt receipt;
 }
