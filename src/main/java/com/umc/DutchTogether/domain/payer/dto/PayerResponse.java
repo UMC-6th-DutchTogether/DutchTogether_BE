@@ -27,7 +27,6 @@ public class PayerResponse {
         private Long payerId;
     }
 
-    // 위 아래 뭐가 좋을지 모르겠음
     @Builder
     @Getter
     @NoArgsConstructor
@@ -47,4 +46,24 @@ public class PayerResponse {
         private Long settlementId;
     }
 
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "결제자 정보 응답 DTO")
+    public static class PayerInfoListDTO{
+        private List<PayerInfoDTO> PayerInfos;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "결제자 정보 DTO")
+    public static class PayerInfoDTO{
+        private String name;
+        private String bank;
+        private Long accountNum;
+        private int totalAmount;
+    }
 }

@@ -6,6 +6,7 @@ import com.umc.DutchTogether.domain.payer.service.PayerCommandService;
 import com.umc.DutchTogether.domain.payer.service.PayerQueryService;
 import com.umc.DutchTogether.domain.payer.service.PayerQueryServiceImpl;
 import com.umc.DutchTogether.global.apiPayload.ApiResponse;
+import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,11 @@ public class PayerRestController {
     public ApiResponse<PayerResponse.PayerNameListDTO> getPayer(@PathVariable Long meetingNum){
         PayerResponse.PayerNameListDTO payerNameList = payerQueryService.getPayerList(meetingNum);
         return ApiResponse.onSuccess(payerNameList);
+    }
+
+    @GetMapping("/info/{settlerId}")
+    public ApiResponse<PayerResponse.PayerInfoListDTO> getPayerInfo(@PathVariable Long settlerId){
+        PayerResponse.PayerInfoListDTO result = payerQueryService.getPayerInfoListDTO(settlerId);
+        return ApiResponse.onSuccess(result);
     }
 }

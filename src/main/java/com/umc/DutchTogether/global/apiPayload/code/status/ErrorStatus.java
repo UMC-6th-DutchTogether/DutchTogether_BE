@@ -24,6 +24,7 @@ public enum ErrorStatus implements BaseErrorCode {
     // 정산하기 관련 에러
     SETTLEMENT_NOT_FOUND_ID(HttpStatus.NOT_FOUND,"SETTLEMENT4004","settlement ID를 찾을 수 없습니다."),
     SETTLEMENT_NOT_FOUND_BY_MEETING(HttpStatus.NOT_FOUND,"SETTLEMENT4004","해당 meeting과 연결 된 settlement가 없습니다."),
+    SETTLEMENT_NOT_FOUND_BY_SETTLER(HttpStatus.NOT_FOUND,"SETTLEMENT4004","해당 settler와 연결 된 settlement가 없습니다."),
 
     // 결제자 관련 에러
     Payer_NOT_FOUND_BY_SETTLEMENTID(HttpStatus.NOT_FOUND,"PAYER4004","Payer를 찾을 수 없습니다.");

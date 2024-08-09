@@ -44,9 +44,7 @@ public class SettlementSettlerCommandServiceImpl implements SettlementSettlerCom
                         .settlement(settlement)
                         .settler(settler)
                         .build());
-
         settlementSettlerRepository.save(settlementSettler);
-
         return SettlementSettlerConverter.toSettlementSettlerResultDTO(settlementSettler);
     }
 }

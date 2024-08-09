@@ -5,6 +5,8 @@ import com.umc.DutchTogether.domain.payer.entity.Payer;
 import com.umc.DutchTogether.domain.payer.repository.PayerRepository;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
+import com.umc.DutchTogether.domain.settlementSettler.entity.SettlementSettler;
+import com.umc.DutchTogether.domain.settlementSettler.repository.SettlementSettlerRepository;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.PayerHandler;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
 import jakarta.transaction.Transactional;
@@ -14,8 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.Payer_NOT_FOUND_BY_SETTLEMENTID;
-import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.SETTLEMENT_NOT_FOUND_ID;
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.*;
 
 
 @Service
@@ -24,6 +25,7 @@ import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.SE
 public class PayerQueryServiceImpl implements PayerQueryService{
 
     private final SettlementRepository settlementRepository;
+    private final SettlementSettlerRepository settlementSettlerRepository;
 
     @Override
     public PayerResponse.PayerNameListDTO getPayerList(Long meetingNum) {
@@ -49,10 +51,38 @@ public class PayerQueryServiceImpl implements PayerQueryService{
         return settlements;
     }
 
-//    //정산하기 id로 Payer를 찾는 메소드
-//    public Payer getPayer(Long settlementId) {
-//        return payerRepository.findById(settlementId)
-//                .orElseThrow(() -> new PayerHandler(Payer_NOT_FOUND_BY_SETTLEMENTID));
-//    }
+    @Override
+    public PayerResponse.PayerInfoListDTO getPayerInfoListDTO(Long settlerId){
+        List<Settlement> settlementList = getSettlementList(settlerId);
+        List<PayerResponse.PayerInfoDTO> infoList= settlementList.stream()
+                .map(Settlement->{
+                    Payer payer = Settlement.getPayer();
+                    //IF 추가
+                    return PayerResponse.PayerInfoDTO.builder()
+                            .totalAmount(Settlement.getTotalAmount())
+                            .bank(payer.getBank())
+                            .accountNum(payer.getAccountNum())
+                            .name(payer.getName())
+                            .build();
+                })
+                .collect(Collectors.toList());
+        return PayerResponse.PayerInfoListDTO.builder()
+                .PayerInfos(infoList)
+                .build();
+    }
+
+    public List<Settlement> getSettlementListBySettlerId(Long settlerId){
+        List<SettlementSettler> settlementSettlers = settlementSettlerRepository.findAllBySettlerId(settlerId);
+        return settlementSettlers.stream()
+                .map(SettlementSettler->{
+                    Settlement settlement = SettlementSettler.getSettlement();
+                    if(settlement==null) {
+                        throw new SettlementHandler(SETTLEMENT_NOT_FOUND_BY_SETTLER);
+                    }
+                    return settlement;
+                })
+                .collect(Collectors.toList());
+
+    }
 }
 
