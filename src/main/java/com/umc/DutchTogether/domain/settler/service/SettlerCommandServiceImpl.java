@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class SettlerCommandServiceImpl implements SettlerCommandService {
     private final SettlementRepository settlementRepository;
     private final SettlementSettlerRepository settlementSettlerRepository;
     
-    // 저장과정, find과정 예외처리 추가 예정
+    // 저장과정, find 과정 예외처리 추가 예정
     @Override
     public Boolean createSettler(SettlerRequest.SettlerRequestDTO request) {
         List<SettlerRequest.SettlerSettlementsDTO> settlerSettlements = request.getRequests();
@@ -30,14 +32,22 @@ public class SettlerCommandServiceImpl implements SettlerCommandService {
                     Settler settler = Settler.builder()
                             .name(dto.getName())
                             .build();
-                    settler= settlerRepository.save(settler);
+
+                    Optional<Settler> existingSettler = checkSettler(settler);
+                    Settler finalSettler = settler;
+                    settler = existingSettler.orElseGet(() -> settlerRepository.save(finalSettler));
 
                     return SettlementSettler.builder()
                             .settler(settler)
                             .settlement(settlementRepository.findById(dto.getSettlementId()).get())
                             .build();
                 })
+                .filter(Objects::nonNull) // null이 아닌 경우에만 처리
                 .forEach(settlementSettlerRepository::save);
         return true;
+    }
+
+    public Optional<Settler> checkSettler(Settler settler) {
+        return settlerRepository.findByName(settler.getName());
     }
 }

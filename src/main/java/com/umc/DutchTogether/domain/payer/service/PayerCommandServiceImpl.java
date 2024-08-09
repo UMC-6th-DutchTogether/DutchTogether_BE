@@ -56,12 +56,9 @@ public class PayerCommandServiceImpl implements PayerCommandService{
 
     //정산하기 생성 메소드
     private void createSettlement(Payer payer, Long meetingNum) {
-        Meeting meeting;
-        try {
-            meeting = meetingRepository.findById(meetingNum).orElseThrow(() -> new RuntimeException("Meeting not found with id: " + meetingNum));
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to find meetingNum", e);
-        }
+        Meeting meeting = meetingRepository.findById(meetingNum)
+                .orElseThrow(() -> new RuntimeException("Meeting not found with id: " + meetingNum));
+
         Settlement settlement = Settlement.builder()
                 .meeting(meeting)
                 .payer(payer)
