@@ -1,5 +1,6 @@
 package com.umc.DutchTogether.domain.meeting.dto;
 
+import com.umc.DutchTogether.global.validation.annotation.UniqueMeeting;
 import com.umc.DutchTogether.global.validation.annotation.ValidateMeeting;
 import com.umc.DutchTogether.global.validation.annotation.ValidatePassword;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,6 +17,7 @@ public class MeetingRequest {
     @NoArgsConstructor
     @AllArgsConstructor
     @ValidateMeeting
+    @UniqueMeeting
     @Schema(title = "모임 생성 요청 DTO")
     public static class MeetingDT0{
         private String meetingId;

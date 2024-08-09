@@ -73,6 +73,11 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
             settlement.setTotalAmount(dto.getTotalAmount());
 
             settlementRepository.save(settlement);
+
+            SettlementStatus settlementStatus = SettlementStatus.builder()
+                    .settlement(settlement)
+                    .build();
+            settlementStatusRepository.save(settlementStatus);
         });
 
         return true;
