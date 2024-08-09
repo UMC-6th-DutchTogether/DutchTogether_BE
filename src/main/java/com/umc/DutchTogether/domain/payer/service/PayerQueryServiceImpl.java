@@ -53,7 +53,7 @@ public class PayerQueryServiceImpl implements PayerQueryService{
 
     @Override
     public PayerResponse.PayerInfoListDTO getPayerInfoListDTO(Long settlerId){
-        List<Settlement> settlementList = getSettlementList(settlerId);
+        List<Settlement> settlementList = getSettlementListBySettlerId(settlerId);
         List<PayerResponse.PayerInfoDTO> infoList= settlementList.stream()
                 .map(Settlement->{
                     Payer payer = Settlement.getPayer();
@@ -82,7 +82,6 @@ public class PayerQueryServiceImpl implements PayerQueryService{
                     return settlement;
                 })
                 .collect(Collectors.toList());
-
     }
 }
 
