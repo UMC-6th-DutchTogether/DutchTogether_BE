@@ -14,9 +14,15 @@ import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 import com.umc.DutchTogether.domain.settlementStatus.respoistory.SettlementStatusRepository;
 import com.umc.DutchTogether.domain.settlementSettler.entity.Status;
 
+import com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.PayerHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,16 +42,28 @@ public class SettlementStatusQueryServiceImpl implements SettlementStatusQuerySe
 
     //정산 현황 보기 page 정보 전달
     @Override
-    public SettlementStatusResponse.SettlementStatusDTO getStatus(Long meetingId) {
+    public SettlementStatusResponse.SettlementStatusDTO getStatus(Long meetingNum) {
+        Meeting meeting = meetingRepository.findById(meetingNum)
+                .orElseThrow(() -> new MeetingHandler(ErrorStatus.MEETING_NOT_FOUND));
 
-        Settlement settlement = settlementRepository.findByMeetingId(meetingId).orElse(null);
-        Meeting meeting = meetingRepository.findById(meetingId).orElse(null);
-        Payer payer = payerRepository.findById(settlement.getPayer().getId()).orElse(null);
-        SettlementStatus settlementStatus = settlementStatusRepository.findById(settlement.getSettlementStatus().getId()).orElse(null);
+        List<Settlement> settlements = settlementRepository.findAllByMeetingId(meetingNum);
 
-        List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList = getSettlers(settlement.getId());
+        if (settlements.isEmpty()) {
+            throw new SettlementHandler(ErrorStatus.SETTLEMENT_NOT_FOUND_ID);
+        }
 
-        return SettlementStatusConverter.toSettlementStatusDTO(settlement,settlementStatus,meeting,payer,settlersDTOList);
+        Settlement firstSettlement = settlements.get(0);
+        Payer payer = payerRepository.findById(firstSettlement.getPayer().getId())
+                .orElseThrow(() -> new PayerHandler(ErrorStatus.Payer_NOT_FOUND_BY_SETTLEMENTID));
+        SettlementStatus settlementStatus = settlementStatusRepository.findById(firstSettlement.getSettlementStatus().getId())
+                .orElseThrow(() -> new SettlementHandler(ErrorStatus.SETTLEMENT_STATUS_NOT_FOUND));
+
+        List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList = new ArrayList<>();
+        for (Settlement settlement : settlements) {
+            settlersDTOList.addAll(getSettlers(settlement.getId()));
+        }
+
+        return SettlementStatusConverter.toSettlementStatusDTO(firstSettlement, settlementStatus, meeting, payer, settlersDTOList);
     }
 
 

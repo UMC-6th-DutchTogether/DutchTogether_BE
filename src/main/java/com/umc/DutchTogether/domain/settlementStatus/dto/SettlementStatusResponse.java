@@ -17,6 +17,16 @@ public class SettlementStatusResponse {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    @Schema(title = "정산 현황 로그인 응답 DTO")
+    public static class SettlementStatusLoginDTO{
+        private Long meetingNum;
+        private String token;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Schema(title = "정산 현황 응답 DTO")
     public static class SettlementStatusDTO{
         private String meetingName;
