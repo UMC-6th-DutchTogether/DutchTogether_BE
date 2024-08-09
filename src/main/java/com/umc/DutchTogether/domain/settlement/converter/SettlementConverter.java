@@ -11,5 +11,4 @@ public class SettlementConverter {
                 .settlementId(settlement.getId())
                 .build();
     }
-
 }
