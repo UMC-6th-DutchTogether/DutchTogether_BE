@@ -1,9 +1,12 @@
 package com.umc.DutchTogether.domain.settlementStatus.controller;
 
+import com.umc.DutchTogether.domain.settlementStatus.dto.SettlementStatusRequest;
 import com.umc.DutchTogether.domain.settlementStatus.dto.SettlementStatusResponse;
+import com.umc.DutchTogether.domain.settlementStatus.service.SettlementStatusCommandService;
 import com.umc.DutchTogether.domain.settlementStatus.service.SettlementStatusQueryService;
 import com.umc.DutchTogether.global.apiPayload.ApiResponse;
 import com.umc.DutchTogether.global.validation.annotation.ExistMeeting;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,13 @@ import org.springframework.web.bind.annotation.*;
 public class SettlementStatusRestController {
 
     private final SettlementStatusQueryService settlementStatusQueryService;
+    private final SettlementStatusCommandService settlementStatusCommandService;
+
+    @PostMapping("/login")
+    public ApiResponse<SettlementStatusResponse.SettlementStatusLoginDTO> login(@Valid @RequestBody SettlementStatusRequest.SettlementStatusDTO request) {
+        SettlementStatusResponse.SettlementStatusLoginDTO status = settlementStatusCommandService.login(request);
+        return ApiResponse.onSuccess(status);
+    }
 
     @GetMapping("/{meetingNum}")
     public ApiResponse<SettlementStatusResponse.SettlementStatusDTO> getSettlementStatus(@ExistMeeting @PathVariable Long meetingNum) {

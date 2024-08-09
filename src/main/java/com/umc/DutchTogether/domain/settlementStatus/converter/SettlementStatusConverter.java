@@ -10,6 +10,14 @@ import com.umc.DutchTogether.domain.settler.entity.Settler;
 import java.util.List;
 
 public class SettlementStatusConverter {
+
+    public static SettlementStatusResponse.SettlementStatusLoginDTO toLoginResultDTO(Long meetingNum, String token) {
+        return SettlementStatusResponse.SettlementStatusLoginDTO.builder()
+                .meetingNum(meetingNum)
+                .token(token)
+                .build();
+    }
+
     public static SettlementStatusResponse.SettlementStatusDTO toSettlementStatusDTO(Settlement settlement, SettlementStatus settlementStatus , Meeting meeting, Payer payer, List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList){
         return SettlementStatusResponse.SettlementStatusDTO.builder()
                 .meetingName(meeting.getName())

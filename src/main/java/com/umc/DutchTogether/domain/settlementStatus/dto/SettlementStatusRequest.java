@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class SettlementStatusRequest {
+
     @Builder
     @Getter
     @NoArgsConstructor
@@ -16,6 +17,7 @@ public class SettlementStatusRequest {
         private String meetingId;
         private String password;
     }
+
     @Builder
     @Getter
     @NoArgsConstructor

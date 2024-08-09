@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     Optional<Meeting> findByLink(String link);
+    Optional<Meeting> findByMeetingIdAndPassword(String meetingId, String password);
 }
 
