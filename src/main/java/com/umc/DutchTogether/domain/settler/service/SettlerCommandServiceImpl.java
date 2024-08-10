@@ -40,11 +40,11 @@ public class SettlerCommandServiceImpl implements SettlerCommandService {
                 .map(dto -> {
                     Settler settler = SettlerConverter.toSettler(dto);
                     Optional<Settler> existingSettler = checkSettler(settler);
-                    Settler finalSettler = settler;
-                    settler = existingSettler.orElseGet(() -> settlerRepository.save(finalSettler));
+
+                    Settler finalSettler = existingSettler.orElseGet(() -> settlerRepository.save(settler));
 
                     Settlement settlement = settlementRepository.findById(dto.getSettlementId()).orElseThrow();
-                    return SettlerConverter.toSettlementSettler(settler, settlement);
+                    return SettlerConverter.toSettlementSettler(finalSettler, settlement);
                 })
                 .filter(Objects::nonNull) // null 아닌 경우에만 처리
                 .forEach(settlementSettlerRepository::save);
