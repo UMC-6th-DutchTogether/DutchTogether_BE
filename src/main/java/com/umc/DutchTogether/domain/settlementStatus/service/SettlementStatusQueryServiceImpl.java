@@ -18,6 +18,7 @@ import com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.PayerHandler;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementStatusHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.SETTLEMENT_STATUS_NOT_FOUND;
 
 
 @Service
@@ -53,9 +56,8 @@ public class SettlementStatusQueryServiceImpl implements SettlementStatusQuerySe
 
         List<SettlementStatusResponse.SettlementListDTO> settlementDTOList = settlements.stream()
                 .map(settlement -> {
-                    SettlementStatus settlementStatus = settlementStatusRepository.findById(settlement.getSettlementStatus().getId())
-                            .orElseThrow(() -> new SettlementHandler(ErrorStatus.SETTLEMENT_STATUS_NOT_FOUND));
-
+//                    SettlementStatus settlementStatus = settlementStatusRepository.findById(settlement.getSettlementStatus().getId())
+//                            .orElseThrow(() -> new SettlementHandler(SETTLEMENT_STATUS_NOT_FOUND));
                     List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList = getSettlers(settlement.getId());
 
                     return SettlementStatusConverter.toSettlementListDTO(settlement, settlersDTOList);
@@ -67,10 +69,8 @@ public class SettlementStatusQueryServiceImpl implements SettlementStatusQuerySe
 
     @Override
     public SettlementStatusResponse.SettlementSettlersDTO findSettler(Long settlementId, String settlerName) {
-        SettlementSettler settlementSettler = settlementSettlerRepository.findBySettlementIdAndSettlerName(settlementId, settlerName);
-        if (settlementSettler == null) {
-            return null;
-        }
+        SettlementSettler settlementSettler = settlementSettlerRepository.findBySettlementIdAndSettlerName(settlementId, settlerName)
+                .orElseThrow(()-> new SettlementStatusHandler(SETTLEMENT_STATUS_NOT_FOUND));
         return SettlementStatusConverter.toSettlementSettlersDTO(settlementSettler);
     }
 
