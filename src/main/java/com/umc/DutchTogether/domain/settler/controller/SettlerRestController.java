@@ -5,6 +5,7 @@ import com.umc.DutchTogether.domain.settler.dto.SettlerResponse;
 import com.umc.DutchTogether.domain.settler.service.SettlerCommandService;
 import com.umc.DutchTogether.domain.settler.service.SettlerQueryService;
 import com.umc.DutchTogether.global.apiPayload.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class SettlerRestController {
     private final SettlerQueryService settlerQueryService;
 
     @PostMapping("/")
-    public ApiResponse<Boolean> createSettler(@RequestBody SettlerRequest.SettlerRequestDTO request) {
+    public ApiResponse<Boolean> createSettler(@Valid @RequestBody SettlerRequest.SettlerRequestDTO request) {
         Boolean result = settlerCommandService.createSettler(request);
         return ApiResponse.onSuccess(result);
     }
