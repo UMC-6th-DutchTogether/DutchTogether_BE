@@ -52,4 +52,10 @@ public class PayerConverter {
                 .PayerInfos(payerInfos)
                 .build();
     }
+
+    public static PayerResponse.PayerListDTO payerListDTO(List<PayerResponse.PayerDTO> payerDTOs){
+        return PayerResponse.PayerListDTO.builder()
+                .payers(payerDTOs)
+                .build();
+    }
 }

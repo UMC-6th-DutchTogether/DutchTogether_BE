@@ -7,8 +7,11 @@ import com.umc.DutchTogether.domain.payer.dto.PayerRequest;
 import com.umc.DutchTogether.domain.payer.dto.PayerResponse;
 import com.umc.DutchTogether.domain.payer.entity.Payer;
 import com.umc.DutchTogether.domain.payer.repository.PayerRepository;
+import com.umc.DutchTogether.domain.settlement.converter.SettlementConverter;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.PayerHandler;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -20,6 +23,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.MEETING_NOT_FOUND;
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.PAYER_LIST_EMPTY;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -28,18 +34,21 @@ public class PayerCommandServiceImpl implements PayerCommandService{
     private final PayerRepository payerRepository;
     private final SettlementRepository settlementRepository;
     private final MeetingRepository meetingRepository;
-
-    /*
-    ##예외처리 바꿀 예정##
-     */
+    
+    //PayerListDTO 전달받아 해당 모임의 Payers 저장하는 메소드
     @Override
     public PayerResponse.PayerListDTO createPayer(PayerRequest.PayerListDTO request) {
         List<PayerRequest.PayerDTO> payers = request.getPayers();
+        if(payers.isEmpty()){
+            throw new PayerHandler(PAYER_LIST_EMPTY);
+        }
         List<PayerResponse.PayerDTO> payersResponse = payers.stream()
                 .map(payerDTO-> {
                     Payer  payer = PayerConverter.toPayer(payerDTO);
                     Optional<Payer> existingPayer = checkPayer(payer);
+                    //결제자가 2명인 경우 
                     if (existingPayer.isPresent()) {
+                        //정산하기만 추가적으로 생성, 결제자는 1명으로 유지
                         createSettlement(existingPayer.get(), request.getMeetingNum());
                         return null;
                     }
@@ -49,25 +58,18 @@ public class PayerCommandServiceImpl implements PayerCommandService{
                 })
                 .filter(Objects::nonNull) // null 값을 필터링하여 제거
                 .collect(Collectors.toList());
-        return PayerResponse.PayerListDTO.builder()
-                .payers(payersResponse)
-                .build();
+        return PayerConverter.payerListDTO(payersResponse);
     }
 
     //정산하기 생성 메소드
     private void createSettlement(Payer payer, Long meetingNum) {
         Meeting meeting = meetingRepository.findById(meetingNum)
-                .orElseThrow(() -> new RuntimeException("Meeting not found with id: " + meetingNum));
-
-        Settlement settlement = Settlement.builder()
-                .meeting(meeting)
-                .payer(payer)
-                .build();
+                .orElseThrow(() -> new MeetingHandler(MEETING_NOT_FOUND));
+        Settlement settlement = SettlementConverter.toSettlement(payer,meeting);
         try {
             settlementRepository.save(settlement);
         } catch (Exception e) {
-            // 예외 처리 로직 추가
-            throw new RuntimeException("Failed to save settlement", e);
+            throw new RuntimeException("Settlement 저장에 실패 했습니다.", e);
         }
     }
 
@@ -76,8 +78,7 @@ public class PayerCommandServiceImpl implements PayerCommandService{
         try {
             return payerRepository.save(payer);
         } catch (Exception e) {
-            // 예외 처리 로직 추가
-            throw new RuntimeException("Failed to save new payer", e);
+            throw new RuntimeException("Payer 저장에 실패 했습니다.", e);
         }
     }
 
