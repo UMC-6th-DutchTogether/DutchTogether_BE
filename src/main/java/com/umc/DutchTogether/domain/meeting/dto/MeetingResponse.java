@@ -13,7 +13,7 @@ public class MeetingResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     @Schema(title = "모임 생성 응답 DTO")
-    public static class MeetingDT0 {
+    public static class MeetingResultDT0 {
         private Long meetingNum;
     }
 

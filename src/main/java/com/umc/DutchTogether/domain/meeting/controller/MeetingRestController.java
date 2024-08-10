@@ -21,8 +21,14 @@ public class MeetingRestController {
     private final MeetingQueryService meetingQueryService;
 
     @PostMapping("/")
-    public ApiResponse<MeetingResponse.MeetingDT0> createMeeting(@Valid @RequestBody MeetingRequest.MeetingDT0 request){
+    public ApiResponse<MeetingResponse.MeetingResultDT0> createMeeting(@Valid @RequestBody MeetingRequest.MeetingDT0 request){
         Meeting meeting = meetingCommandService.createMeeting(request);
+        return ApiResponse.onSuccess(MeetingConverter.toMeetingResultDTO(meeting));
+    }
+
+    @PutMapping("/meetingName")
+    public ApiResponse<MeetingResponse.MeetingResultDT0> putMeetingName(@Valid @RequestBody MeetingRequest.PutMeetingNameDT0 request){
+        Meeting meeting = meetingCommandService.updateMeetingName(request);
         return ApiResponse.onSuccess(MeetingConverter.toMeetingResultDTO(meeting));
     }
 

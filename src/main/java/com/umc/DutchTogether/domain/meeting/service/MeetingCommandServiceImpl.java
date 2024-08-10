@@ -35,6 +35,24 @@ public class MeetingCommandServiceImpl implements MeetingCommandService{
         return meetingRepository.save(newMeeting);
     }
 
+    @Override
+    public Meeting updateMeetingName(MeetingRequest.PutMeetingNameDT0 request) {
+        Meeting existingMeeting = meetingRepository.findById(request.getMeetingNum())
+                .orElse(null);
+
+        if (existingMeeting == null) {
+            existingMeeting = Meeting.builder()
+                    .name(request.getMeetingName())
+                    .link(generateLink())
+                    .build();
+        } else {
+            // Meeting이 있을 경우 이름만 업데이트
+            existingMeeting.setName(request.getMeetingName());
+        }
+
+        return meetingRepository.save(existingMeeting);
+    }
+
     private String generateLink() {
         return UUID.randomUUID().toString().substring(0, 8);
     }
