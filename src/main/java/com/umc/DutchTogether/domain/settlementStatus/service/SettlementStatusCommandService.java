@@ -9,5 +9,6 @@ import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 import java.util.Optional;
 
 public interface SettlementStatusCommandService {
+    public SettlementStatusResponse.SettlementStatusLoginDTO login(SettlementStatusRequest.SettlementStatusDTO request);
     public void addSettler(Long statusId, String settlerName);
 }

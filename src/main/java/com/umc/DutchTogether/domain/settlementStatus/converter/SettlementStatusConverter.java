@@ -3,26 +3,47 @@ package com.umc.DutchTogether.domain.settlementStatus.converter;
 import com.umc.DutchTogether.domain.meeting.entity.Meeting;
 import com.umc.DutchTogether.domain.payer.entity.Payer;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
+import com.umc.DutchTogether.domain.settlementSettler.entity.SettlementSettler;
 import com.umc.DutchTogether.domain.settlementStatus.dto.SettlementStatusResponse;
-import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 import com.umc.DutchTogether.domain.settler.entity.Settler;
 
 import java.util.List;
 
 public class SettlementStatusConverter {
-    public static SettlementStatusResponse.SettlementStatusDTO toSettlementStatusDTO(Settlement settlement, SettlementStatus settlementStatus , Meeting meeting, Payer payer, List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList){
-        return SettlementStatusResponse.SettlementStatusDTO.builder()
-                .meetingName(meeting.getName())
-                .payer(payer.getName())
-                .completedNum(settlementStatus.getCompletedPeople())
-                .numPeople(settlement.getNumPeople())
-                .settlementStatusDTOList(settlersDTOList)
+
+    public static SettlementStatusResponse.SettlementStatusLoginDTO toLoginResultDTO(Long meetingNum, String token) {
+        return SettlementStatusResponse.SettlementStatusLoginDTO.builder()
+                .meetingNum(meetingNum)
+                .token(token)
                 .build();
     }
 
-    public static SettlementStatusResponse.SettlementSettlersDTO settlementSettlersDTO(Settler settler){
+    public static SettlementStatusResponse.SettlementStatusDTO toSettlementStatusDTO(Meeting meeting, List<SettlementStatusResponse.SettlementListDTO> settlementDTOList){
+        return SettlementStatusResponse.SettlementStatusDTO.builder()
+                .meetingName(meeting.getName())
+                .settlementListDTO(settlementDTOList)
+                .build();
+    }
+
+    public static SettlementStatusResponse.SettlementListDTO toSettlementListDTO(Settlement settlement, List<SettlementStatusResponse.SettlementSettlersDTO> settlersDTOList){
+        Payer payer = settlement.getPayer();
+
+        int completedNum = settlersDTOList.size();
+
+        return SettlementStatusResponse.SettlementListDTO.builder()
+                .settlementId(settlement.getId())
+                .numPeople(settlement.getNumPeople())
+                .completedNum(completedNum)
+                .payer(payer.getName())
+                .completedSettler(settlersDTOList)
+                .build();
+    }
+
+    public static SettlementStatusResponse.SettlementSettlersDTO toSettlementSettlersDTO(SettlementSettler settlementSettler){
+        Settler settler = settlementSettler.getSettler();
+
         return SettlementStatusResponse.SettlementSettlersDTO.builder()
-                .updateAt(settler.getUpdatedAt())
+                .settlementTime(settlementSettler.getUpdatedAt())
                 .name(settler.getName())
                 .build();
     }
