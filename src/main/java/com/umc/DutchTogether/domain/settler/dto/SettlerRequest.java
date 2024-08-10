@@ -1,6 +1,7 @@
 package com.umc.DutchTogether.domain.settler.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class SettlerRequest {
     @AllArgsConstructor
     @Schema(title = "정산자 생성 요청 DTO")
     public static  class SettlerRequestDTO{
+        @NotNull
         private List<SettlerSettlementsDTO> requests;
     }
 

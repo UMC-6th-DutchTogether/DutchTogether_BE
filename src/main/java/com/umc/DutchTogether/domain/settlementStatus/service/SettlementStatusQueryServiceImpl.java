@@ -67,23 +67,18 @@ public class SettlementStatusQueryServiceImpl implements SettlementStatusQuerySe
 
     @Override
     public SettlementStatusResponse.SettlementSettlersDTO findSettler(Long settlementId, String settlerName) {
-
         SettlementSettler settlementSettler = settlementSettlerRepository.findBySettlementIdAndSettlerName(settlementId, settlerName);
-
         if (settlementSettler == null) {
             return null;
         }
-
         return SettlementStatusConverter.toSettlementSettlersDTO(settlementSettler);
     }
 
     // 정산 완료 인원을 리스트에 dto(name,updateAt)로 담는 메소드
     public List<SettlementStatusResponse.SettlementSettlersDTO> getSettlers(Long settlementId){
-
         List<SettlementSettler> settlementSettlers = settlementSettlerRepository.findAllBySettlementIdAndStatus(settlementId, Status.COMPLETED);
-
         return settlementSettlers.stream()
-                .map(settlementSettler -> SettlementStatusConverter.toSettlementSettlersDTO(settlementSettler))
+                .map(SettlementStatusConverter::toSettlementSettlersDTO)
                 .collect(Collectors.toList());
     }
 }
