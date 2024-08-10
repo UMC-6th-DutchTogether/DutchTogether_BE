@@ -23,7 +23,16 @@ public class MeetingRequest {
         private String meetingId;
         @ValidatePassword
         private String password;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "모임 이름 put 요청 DTO")
+    public static class PutMeetingNameDT0{
+        private Long meetingNum;
         @NotNull(message = "모임 이름을 입력해주세요")
-        private String name;
+        private String meetingName;
     }
 }

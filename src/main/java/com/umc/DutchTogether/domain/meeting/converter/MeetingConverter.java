@@ -13,14 +13,14 @@ public class MeetingConverter {
         return Meeting.builder()
                 .meetingId(requestBody.getMeetingId())
                 .password(requestBody.getPassword())
-                .name(requestBody.getName())
                 .build();
     }
-    public static MeetingResponse.MeetingDT0 toMeetingResultDTO(Meeting meeting) {
+
+    public static MeetingResponse.MeetingResultDT0 toMeetingResultDTO(Meeting meeting) {
         if (meeting == null) {
             return null;
         }
-        return MeetingResponse.MeetingDT0.builder()
+        return MeetingResponse.MeetingResultDT0.builder()
                 .meetingNum(meeting.getId())
                 .build();
     }
