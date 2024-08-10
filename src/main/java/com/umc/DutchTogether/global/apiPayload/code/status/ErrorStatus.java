@@ -24,21 +24,25 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 정산하기 관련 에러
     SETTLEMENT_NOT_FOUND_ID(HttpStatus.NOT_FOUND,"SETTLEMENT4004","settlement ID를 찾을 수 없습니다."),
-    SETTLEMENT_NOT_FOUND_BY_MEETING(HttpStatus.NOT_FOUND,"SETTLEMENT4004","해당 meeting과 연결 된 settlement가 없습니다."),
-    SETTLEMENT_NOT_FOUND_BY_SETTLER(HttpStatus.NOT_FOUND,"SETTLEMENT4004","해당 settler와 연결 된 settlement가 없습니다."),
+    SETTLEMENT_NOT_FOUND_BY_MEETING(HttpStatus.NOT_FOUND,"SETTLEMENT4004","해당 meeting 연결 된 settlement 없습니다."),
+    SETTLEMENT_NOT_FOUND_BY_SETTLER(HttpStatus.NOT_FOUND,"SETTLEMENT4004","해당 settler 연결 된 settlement 없습니다."),
+    SETTLEMENT_LIST_EMPTY(HttpStatus.NOT_FOUND,"SETTLEMENT4000","settlement list가 비어있습니다."),
 
     // 정산하기-정산자 관련에러
-    SETTLEMENT_SETTLER_NOT_FOUND_BY_SETTLER(HttpStatus.NOT_FOUND,"SETTLEMENT_SETTLER4004","해당 settler와 연결 된 settlement-settler가 없습니다."),
+    SETTLEMENT_SETTLER_NOT_FOUND_BY_SETTLER(HttpStatus.NOT_FOUND,"SETTLEMENT_SETTLER4004","해당 settler 연결 된 settlement-settler 없습니다."),
 
     // 결제자 관련 에러
-    PAYER_NOT_FOUND_BY_SETTLEMENTID(HttpStatus.NOT_FOUND,"PAYER4004","payer를 찾을 수 없습니다."),
-    PAYER_LIST_EMPTY(HttpStatus.NOT_FOUND,"PAYER4004","payer list가 비어있습니다."),
+    PAYER_NOT_FOUND_BY_SETTLEMENT_ID(HttpStatus.NOT_FOUND,"PAYER4004","payer 찾을 수 없습니다."),
+    PAYER_LIST_EMPTY(HttpStatus.NOT_FOUND,"PAYER4000","payer list 비어있습니다."),
+
+    // 정산자 관련 에러
+    SETTLER_NOT_FOUND_BY_NAME(HttpStatus.NOT_FOUND,"SETTLER4004","해당 이름에 맞는 settler 없습니다."),
 
     // 영수증 관련 에러
     RECEIPT_NOT_FOUND(HttpStatus.NOT_FOUND,"RECEIPT4004","영수증을 찾을 수 없습니다."),
 
     // 정산현황 관련 에러
-    SETTLEMENT_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND,"SETTLEMENTSTATUS4004","정산 현황을 찾을 수 없습니다.");
+    SETTLEMENT_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND,"SETTLEMENT_STATUS4004","정산 현황을 찾을 수 없습니다.");
 
 
     private final HttpStatus httpStatus;
