@@ -20,7 +20,7 @@ public class PayerRequest {
     public static class PayerListDTO {
         @NotNull
         private List<PayerDTO> payers;
-
+        @NotNull
         private Long meetingNum;
     }
 
