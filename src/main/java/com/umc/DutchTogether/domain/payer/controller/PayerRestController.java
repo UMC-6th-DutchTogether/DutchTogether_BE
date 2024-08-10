@@ -20,8 +20,14 @@ public class PayerRestController {
     private final PayerCommandService payerCommandService;
     private final PayerQueryService payerQueryService;
 
+    @PutMapping("/")
+    public ApiResponse<PayerResponse.PayerListDTO> updatePayers(@Valid @RequestBody PayerRequest.PayerListDTO request) {
+        PayerResponse.PayerListDTO payer = payerCommandService.updatePayer(request);
+        return ApiResponse.onSuccess(payer);
+    }
+
     @PostMapping("/")
-    public ApiResponse<PayerResponse.PayerListDTO> createPayer(@Valid @RequestBody PayerRequest.PayerListDTO request) {
+    public ApiResponse<PayerResponse.PayerListDTO> createPayer(@Valid @RequestBody PayerRequest.PayerNameListDTO request) {
         PayerResponse.PayerListDTO payer = payerCommandService.createPayer(request);
         return ApiResponse.onSuccess(payer);
     }
