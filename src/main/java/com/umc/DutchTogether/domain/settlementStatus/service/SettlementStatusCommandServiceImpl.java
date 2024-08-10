@@ -40,7 +40,7 @@ public class SettlementStatusCommandServiceImpl implements SettlementStatusComma
 
         Optional<Meeting> meetingOptional = meetingRepository.findByMeetingIdAndPassword(request.getMeetingId(), request.getPassword());
         if (!meetingOptional.isPresent()) {
-             new SettlementHandler(ErrorStatus.MEETING_NOT_FOUND);
+             throw new SettlementHandler(ErrorStatus.MEETING_NOT_FOUND);
         }
 
         Meeting meeting = meetingOptional.get();
