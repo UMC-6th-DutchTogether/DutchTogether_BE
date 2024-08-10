@@ -39,7 +39,7 @@ public class SettlementStatusCommandServiceImpl implements SettlementStatusComma
     public SettlementStatusResponse.SettlementStatusLoginDTO login(SettlementStatusRequest.SettlementStatusDTO request) {
 
         Optional<Meeting> meetingOptional = meetingRepository.findByMeetingIdAndPassword(request.getMeetingId(), request.getPassword());
-        if (!meetingOptional.isPresent()) {
+        if (meetingOptional.isEmpty()) {
              throw new SettlementHandler(ErrorStatus.MEETING_NOT_FOUND);
         }
 
