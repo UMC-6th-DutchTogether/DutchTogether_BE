@@ -23,8 +23,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.MEETING_NOT_FOUND;
-import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.PAYER_LIST_EMPTY;
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -37,19 +36,42 @@ public class PayerCommandServiceImpl implements PayerCommandService{
     
     //PayerListDTO 전달받아 해당 모임의 Payers 저장하는 메소드
     @Override
-    public PayerResponse.PayerListDTO createPayer(PayerRequest.PayerListDTO request) {
+    public PayerResponse.PayerListDTO updatePayer(PayerRequest.PayerListDTO request) {
         List<PayerRequest.PayerDTO> payers = request.getPayers();
+        // 입력 확인
         if(payers.isEmpty()){
             throw new PayerHandler(PAYER_LIST_EMPTY);
         }
         List<PayerResponse.PayerDTO> payersResponse = payers.stream()
                 .map(payerDTO-> {
-                    Payer  payer = PayerConverter.toPayer(payerDTO);
-                    Optional<Payer> existingPayer = checkPayer(payer);
-                    //결제자가 2명인 경우 
-                    if (existingPayer.isPresent()) {
+                    Payer payer = payerRepository.findById(payerDTO.getPayerId())
+                            .orElseThrow(()-> new PayerHandler(PAYER_LIST_NOT_FOUND));
+                    //payer 업데이트
+                    payer.setBank(payerDTO.getBank());
+                    payer.setAccountNum(payerDTO.getAccount());
+                    Payer savedPayer = payerRepository.save(payer);
+                    return PayerConverter.toPayerDTO(savedPayer);
+                })
+                .collect(Collectors.toList());
+        return PayerConverter.payerListDTO(payersResponse);
+    }
+
+    // 결제자 이름을 받고 결제자 생성
+    @Override
+    public PayerResponse.PayerListDTO createPayer(PayerRequest.PayerNameListDTO request) {
+        List<PayerRequest.PayerNameDTO> payers = request.getPayerNames();
+        //입력 확인
+        if(payers.isEmpty()){
+            throw new PayerHandler(PAYER_LIST_EMPTY);
+        }
+        List<PayerResponse.PayerDTO> payerResponse = payers.stream()
+                .map(payerDTO->{
+                    Payer payer = PayerConverter.toPayer(payerDTO);
+                    Optional<Payer> existPayer = checkPayer(payer);
+                    //결제자가 2명인 경우
+                    if (existPayer.isPresent()) {
                         //정산하기만 추가적으로 생성, 결제자는 1명으로 유지
-                        createSettlement(existingPayer.get(), request.getMeetingNum());
+                        createSettlement(existPayer.get(), request.getMeetingNum());
                         return null;
                     }
                     Payer savedPayer = saveNewPayer(payer);
@@ -57,8 +79,8 @@ public class PayerCommandServiceImpl implements PayerCommandService{
                     return PayerConverter.toPayerDTO(savedPayer);
                 })
                 .filter(Objects::nonNull) // null 값을 필터링하여 제거
-                .collect(Collectors.toList());
-        return PayerConverter.payerListDTO(payersResponse);
+                .toList();
+        return PayerConverter.payerListDTO(payerResponse);
     }
 
     //정산하기 생성 메소드

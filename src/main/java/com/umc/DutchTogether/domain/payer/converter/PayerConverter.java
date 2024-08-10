@@ -9,11 +9,9 @@ import java.util.List;
 
 public class PayerConverter {
 
-    public static Payer toPayer(PayerRequest.PayerDTO payerDTO) {
+    public static Payer toPayer(PayerRequest.PayerNameDTO payerDTO) {
         return Payer.builder()
                 .name(payerDTO.getName())
-                .accountNum(payerDTO.getAccount())
-                .bank(payerDTO.getBank())
                 .build();
     }
 
