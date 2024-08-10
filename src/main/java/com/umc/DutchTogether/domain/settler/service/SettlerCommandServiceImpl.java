@@ -39,12 +39,12 @@ public class SettlerCommandServiceImpl implements SettlerCommandService {
         settlerSettlements.stream()
                 .map(dto -> {
                     Settler settler = SettlerConverter.toSettler(dto);
-                    Optional<Settler> existingSettler = checkSettler(settler);
-                    Settler finalSettler = settler;
-                    settler = existingSettler.orElseGet(() -> settlerRepository.save(finalSettler));
+                    Optional<Settler> existingSettler = checkSettler(settler,request.getMeetingNum());
+
+                    Settler finalSettler = existingSettler.orElseGet(() -> settlerRepository.save(settler));
 
                     Settlement settlement = settlementRepository.findById(dto.getSettlementId()).orElseThrow();
-                    return SettlerConverter.toSettlementSettler(settler, settlement);
+                    return SettlerConverter.toSettlementSettler(finalSettler, settlement);
                 })
                 .filter(Objects::nonNull) // null 아닌 경우에만 처리
                 .forEach(settlementSettlerRepository::save);
@@ -52,7 +52,7 @@ public class SettlerCommandServiceImpl implements SettlerCommandService {
     }
 
     // 존재하지않아도 예외처리 X -> createSettler 에서 save
-    public Optional<Settler> checkSettler(Settler settler) {
-        return settlerRepository.findByName(settler.getName());
+    public Optional<Settler> checkSettler(Settler settler,Long meetingNum) {
+        return settlerRepository.findByMeetingIdAndSettlerName(meetingNum, settler.getName());
     }
 }

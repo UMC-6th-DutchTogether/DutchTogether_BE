@@ -20,6 +20,8 @@ public class SettlerRequest {
     public static  class SettlerRequestDTO{
         @NotNull
         private List<SettlerSettlementsDTO> requests;
+        @NotNull
+        private Long meetingNum;
     }
 
     @Builder
