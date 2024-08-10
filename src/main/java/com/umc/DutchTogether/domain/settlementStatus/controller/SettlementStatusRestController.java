@@ -39,6 +39,11 @@ public class SettlementStatusRestController {
         return ApiResponse.onSuccess(settler);
     }
 
+    @PostMapping("settler")
+    public ApiResponse<Boolean> addSettler(@Valid @RequestBody SettlementStatusRequest.settlerInfo request){
+        Boolean result = settlementStatusCommandService.addSettler(request);
+        return ApiResponse.onSuccess(result);
+    }
 // 입금자 추가 api
 //    @PostMapping("/{statusId}/settlers")
 //    public ResponseEntity<ApiResponse<Void>> addSettler(

@@ -1,10 +1,13 @@
 package com.umc.DutchTogether.domain.settlementStatus.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 public class SettlementStatusRequest {
 
@@ -23,8 +26,11 @@ public class SettlementStatusRequest {
     @NoArgsConstructor
     @AllArgsConstructor
     @Schema(title = "입금자명 추가 요청 DTO")
-    public static class AddSettlerRequest {
-        private String settlerName;
+    public static class settlerInfo {
+        @NotNull
+        private String name;
+        @NotNull
+        private Long settlementId;
     }
     
 }

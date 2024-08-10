@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface SettlementStatusCommandService {
     public SettlementStatusResponse.SettlementStatusLoginDTO login(SettlementStatusRequest.SettlementStatusDTO request);
-    public void addSettler(Long statusId, String settlerName);
+    public Boolean addSettler(SettlementStatusRequest.settlerInfo settlerInfo);
 }
