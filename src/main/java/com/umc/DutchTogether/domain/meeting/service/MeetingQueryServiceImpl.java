@@ -38,7 +38,10 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
         Meeting meeting = meetingRepository.findByLink("" + link).orElse(null);
         Settlement settlement = settlementRepository.findByMeetingId(meeting.getId()).orElse(null);
         Payer payer = payerRepository.findById(settlement.getPayer().getId()).orElse(null);
-        Receipt receipt = receiptRepository.findById(settlement.getReceipt().getId()).orElse(null);
+        Receipt receipt = null;
+        if(settlement.getReceipt()!=null) {
+            receiptRepository.findById(settlement.getReceipt().getId()).orElse(null);
+        }
         return MeetingConverter.toSingleSettlementResultDTO(meeting, settlement, payer, receipt);
     }
 }
