@@ -46,6 +46,7 @@ public class MeetingConverter {
                 .payer(payer.getName())
                 .bank(payer.getBank())
                 .receiptUrl(receipt.getImageUrl())
+                .settlementId(settlement.getId())
                 .build();
     }
 }

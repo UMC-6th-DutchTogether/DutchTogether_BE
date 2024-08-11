@@ -39,5 +39,6 @@ public class MeetingResponse {
         private int total_amount;
         private int num_people;
         private String receiptUrl;
+        private Long settlementId;
     }
 }
