@@ -15,10 +15,7 @@ import com.umc.DutchTogether.domain.settlementStatus.respoistory.SettlementStatu
 import com.umc.DutchTogether.domain.settlementSettler.entity.Status;
 
 import com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus;
-import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
-import com.umc.DutchTogether.global.apiPayload.exception.handler.PayerHandler;
-import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
-import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementStatusHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,7 +67,7 @@ public class SettlementStatusQueryServiceImpl implements SettlementStatusQuerySe
     @Override
     public SettlementStatusResponse.SettlementSettlersDTO findSettler(Long settlementId, String settlerName) {
         SettlementSettler settlementSettler = settlementSettlerRepository.findBySettlementIdAndSettlerName(settlementId, settlerName)
-                .orElseThrow(()-> new SettlementStatusHandler(SETTLEMENT_STATUS_NOT_FOUND));
+                .orElseThrow(()-> new SettlerHandler(ErrorStatus.SETTLER_NOT_FOUND_BY_NAME));
         return SettlementStatusConverter.toSettlementSettlersDTO(settlementSettler);
     }
 
