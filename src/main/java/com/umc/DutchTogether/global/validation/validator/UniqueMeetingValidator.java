@@ -22,15 +22,16 @@ public class UniqueMeetingValidator implements ConstraintValidator<UniqueMeeting
 
     @Override
     public boolean isValid(MeetingRequest.MeetingDT0 meetingDTO, ConstraintValidatorContext constraintValidatorContext) {
-        boolean meetingExists = meetingRepository.existsByMeetingId(meetingDTO.getMeetingId());
-
-        if (meetingExists) {
-            constraintValidatorContext.disableDefaultConstraintViolation();
-            constraintValidatorContext.buildConstraintViolationWithTemplate(ErrorStatus.MEETING_ALREADY_EXISTS.getMessage())
-                    .addConstraintViolation();
-            return false;
+        boolean meetingIdExist = meetingRepository.existsByMeetingId(meetingDTO.getMeetingId());
+        if (meetingIdExist) {
+            boolean meetingPasswordExist = meetingRepository.existsByPassword(meetingDTO.getPassword());
+            if (meetingPasswordExist) {
+                constraintValidatorContext.disableDefaultConstraintViolation();
+                constraintValidatorContext.buildConstraintViolationWithTemplate(ErrorStatus.MEETING_ALREADY_EXISTS.getMessage())
+                        .addConstraintViolation();
+                return false;
+            }
         }
-
         return true;
     }
 }

@@ -9,6 +9,7 @@ import java.util.Optional;
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     boolean existsByMeetingId(String meetingId);
+    boolean existsByPassword(String Password);
     Optional<Meeting> findByLink(String link);
     Optional<Meeting> findByMeetingIdAndPassword(String meetingId, String password);
 }
