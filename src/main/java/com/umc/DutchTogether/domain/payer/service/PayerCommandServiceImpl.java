@@ -60,6 +60,7 @@ public class PayerCommandServiceImpl implements PayerCommandService{
     @Override
     public PayerResponse.PayerListDTO createPayer(PayerRequest.PayerNameListDTO request) {
         List<PayerRequest.PayerNameDTO> payers = request.getPayerNames();
+        Long meetingNum = request.getMeetingNum();
         //입력 확인
         if(payers.isEmpty()){
             throw new PayerHandler(PAYER_LIST_EMPTY);
@@ -67,7 +68,7 @@ public class PayerCommandServiceImpl implements PayerCommandService{
         List<PayerResponse.PayerDTO> payerResponse = payers.stream()
                 .map(payerDTO->{
                     Payer payer = PayerConverter.toPayer(payerDTO);
-                    Optional<Payer> existPayer = checkPayer(payer);
+                    Optional<Payer> existPayer = checkPayer(payer,meetingNum);
                     //결제자가 2명인 경우
                     if (existPayer.isPresent()) {
                         //정산하기만 추가적으로 생성, 결제자는 1명으로 유지
@@ -105,8 +106,12 @@ public class PayerCommandServiceImpl implements PayerCommandService{
     }
 
     // 해당 결제자가 이미 있는지 확인
-    public Optional<Payer> checkPayer(Payer payer) {
-        return payerRepository.findByNameAndAccountNumAndBank(
-                payer.getName(), payer.getAccountNum(), payer.getBank());
+    public Optional<Payer> checkPayer(Payer payer, Long meetingNum) {
+        return payerRepository.findAllByName(payer.getName()).stream()
+                .filter(p -> {
+                    List<Settlement> settlements = settlementRepository.findByPayerIdAndMeetingId(p.getId(), meetingNum);
+                    return settlements != null && !settlements.isEmpty();  // Settlement가 존재하는지 확인
+                })
+                .findFirst();  // 첫 번째 만족하는 Payer를 반환, 없으면 Optional.empty() 반환
     }
 }
