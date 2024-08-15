@@ -35,6 +35,7 @@ public enum ErrorStatus implements BaseErrorCode {
     PAYER_NOT_FOUND_BY_SETTLEMENT_ID(HttpStatus.NOT_FOUND,"PAYER4004","payer 찾을 수 없습니다."),
     PAYER_LIST_EMPTY(HttpStatus.NOT_FOUND,"PAYER4000","payer list 비어있습니다."),
     PAYER_LIST_NOT_FOUND(HttpStatus.NOT_FOUND,"PAYER4000","payer 가 없습니다."),
+    PAYER_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "PAYER5000", "서버 에러, 관리자에게 문의 바랍니다."),
 
     // 정산자 관련 에러
     SETTLER_NOT_FOUND_BY_NAME(HttpStatus.NOT_FOUND,"SETTLER4004","해당 이름에 맞는 settler 없습니다."),

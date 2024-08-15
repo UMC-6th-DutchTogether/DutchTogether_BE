@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface SettlementRepository extends JpaRepository<Settlement, Long> {
     Optional<Settlement> findByMeetingId(Long meetingId);
     List<Settlement> findAllByMeetingId(Long meetingId);
+    List<Settlement> findByPayerIdAndMeetingId(Long payerId , Long meetingId);
 }
