@@ -24,8 +24,8 @@ public class SettlerRestController {
     }
 
     @GetMapping("/{meetingNum}")
-    public ApiResponse<SettlerResponse.settlerResponseDTO> getSettlers(@PathVariable Long meetingNum) {
-        SettlerResponse.settlerResponseDTO result = settlerQueryService.createSettlers(meetingNum);
+    public ApiResponse<SettlerResponse.settlerResponseDTO> getSettlers(@PathVariable String Link) {
+        SettlerResponse.settlerResponseDTO result = settlerQueryService.createSettlers(Link);
         return ApiResponse.onSuccess(result);
     }
 }

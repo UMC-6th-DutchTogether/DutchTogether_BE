@@ -10,5 +10,5 @@ public interface SettlerQueryService {
     //for get method
 
     public List<Settlement> getSettlements(Long meetingNum);
-    public SettlerResponse.settlerResponseDTO createSettlers(Long meetingNum);
+    public SettlerResponse.settlerResponseDTO createSettlers(String Link);
 }
