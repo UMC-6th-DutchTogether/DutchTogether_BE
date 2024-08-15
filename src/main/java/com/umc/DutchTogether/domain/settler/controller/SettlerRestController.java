@@ -23,7 +23,7 @@ public class SettlerRestController {
         return ApiResponse.onSuccess(result);
     }
 
-    @GetMapping("/{meetingNum}")
+    @GetMapping("/{Link}")
     public ApiResponse<SettlerResponse.settlerResponseDTO> getSettlers(@PathVariable String Link) {
         SettlerResponse.settlerResponseDTO result = settlerQueryService.createSettlers(Link);
         return ApiResponse.onSuccess(result);
