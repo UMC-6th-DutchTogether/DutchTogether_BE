@@ -1,6 +1,7 @@
 package com.umc.DutchTogether.domain.meeting.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,5 +41,25 @@ public class MeetingResponse {
         private int num_people;
         private String receiptUrl;
         private Long settlementId;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(title = "나만 정산하기 톺아보기 정보 조회 DTO")
+    public static class MeetingResultDTO {
+        @NotNull
+        private String meetingName;
+        @NotNull
+        private String Bank;
+        @NotNull
+        private String payerName;
+
+        private Long account_num;
+
+        private int total_amount;
+
+        private int num_people;
     }
 }
