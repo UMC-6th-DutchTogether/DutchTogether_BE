@@ -48,7 +48,7 @@ public class MeetingResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     @Schema(title = "나만 정산하기 톺아보기 정보 조회 DTO")
-    public static class MeetingResultDTO {
+    public static class MeetingInfoResultDTO {
         @NotNull
         private String meetingName;
         @NotNull
