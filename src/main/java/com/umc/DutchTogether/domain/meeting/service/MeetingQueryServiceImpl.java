@@ -11,11 +11,13 @@ import com.umc.DutchTogether.domain.receipt.repository.ReceiptRepository;
 import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.PayerHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlerHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.MEETING_NOT_FOUND;
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +45,15 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
             receiptRepository.findById(settlement.getReceipt().getId()).orElse(null);
         }
         return MeetingConverter.toSingleSettlementResultDTO(meeting, settlement, payer, receipt);
+    }
+
+    @Override
+    public MeetingResponse.MeetingInfoResultDTO getMeetingInfo(Long meetingNum) {
+        Meeting meeting = meetingRepository.findById(meetingNum).orElseThrow(()->new MeetingHandler(MEETING_NOT_FOUND));
+        Settlement settlement = settlementRepository.findByMeetingId(meetingNum).orElseThrow(()->new SettlerHandler(SETTLEMENT_NOT_FOUND_BY_MEETING));
+        Payer payer = payerRepository.findById(settlement.getPayer().getId()).orElseThrow(()->new PayerHandler(PAYER_LIST_NOT_FOUND));
+        // 컨버터 작성
+        return null;
+
     }
 }
