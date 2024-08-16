@@ -49,4 +49,15 @@ public class MeetingConverter {
                 .settlementId(settlement.getId())
                 .build();
     }
+
+    public static MeetingResponse.MeetingInfoResultDTO toMeetingInfoResultDTO(Meeting meeting, Settlement settlement, Payer payer){
+        return MeetingResponse.MeetingInfoResultDTO.builder()
+                .meetingName(meeting.getName())
+                .payerName(payer.getName())
+                .Bank(payer.getBank())
+                .account_num(payer.getAccountNum())
+                .total_amount(settlement.getTotalAmount())
+                .num_people(settlement.getNumPeople())
+                .build();
+    }
 }

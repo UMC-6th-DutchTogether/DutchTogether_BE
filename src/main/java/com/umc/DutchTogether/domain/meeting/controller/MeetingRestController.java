@@ -44,9 +44,9 @@ public class MeetingRestController {
         return ApiResponse.onSuccess(meeting);
     }
 
-    @GetMapping("/{meetingNum}")
+    @GetMapping("/info/{meetingNum}")
     public ApiResponse<MeetingResponse.MeetingInfoResultDTO> getMeetingInfo(@PathVariable Long meetingNum) {
-        MeetingResponse.MeetingInfoResultDTO result = null;
+        MeetingResponse.MeetingInfoResultDTO result = meetingQueryService.getMeetingInfo(meetingNum);
         return ApiResponse.onSuccess(result);
     }
 
