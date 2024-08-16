@@ -53,7 +53,7 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
         Settlement settlement = settlementRepository.findByMeetingId(meetingNum).orElseThrow(()->new SettlerHandler(SETTLEMENT_NOT_FOUND_BY_MEETING));
         Payer payer = payerRepository.findById(settlement.getPayer().getId()).orElseThrow(()->new PayerHandler(PAYER_LIST_NOT_FOUND));
         // 컨버터 작성
-        return null;
+        return MeetingConverter.toMeetingInfoResultDTO(meeting, settlement, payer);
 
     }
 }
