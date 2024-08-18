@@ -13,6 +13,7 @@ import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
 import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 import com.umc.DutchTogether.domain.settlementStatus.respoistory.SettlementStatusRepository;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.MEETING_NOT_FOUND;
 import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.SETTLEMENT_NOT_FOUND_ID;
 
 @Service
@@ -37,28 +39,16 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
 
     @Override
     public SettlementResponse.SettlementDTO createSingleSettlement(SettlementRequest.SettlementDTO request) {
-        Optional<Meeting> meeting = meetingRepository.findById(request.getMeetingNum());
+        Meeting meeting = meetingRepository.findById(request.getMeetingNum())
+                .orElseThrow(()-> new MeetingHandler(MEETING_NOT_FOUND));
         Receipt receipt = null;
         if (request.getReceiptId() != null) {
             receipt = receiptRepository.findById(request.getReceiptId()).orElse(null);
         }
 
-        // 결제자 저장 ( 여유되면 converter에 다 넣자)
-        Payer payer = Payer.builder()
-                .name(request.getPayer())
-                .accountNum(request.getAccountNumber())
-                .bank(request.getBankName())
-                .build();
-        Settlement settlement = Settlement.builder()
-                .meeting(meeting.get())
-                .payer(payer)
-                .totalAmount(request.getTotalAmount())
-                .numPeople(request.getNumPeople())
-                .receipt(receipt)
-                .build();
-        SettlementStatus settlementStatus = SettlementStatus.builder()
-                .settlement(settlement)
-                .build();
+        Payer payer = SettlementConverter.toPayer(request);
+        Settlement settlement = SettlementConverter.toSettlement(request,meeting,payer,receipt);
+        SettlementStatus settlementStatus = SettlementConverter.toSettlementStatus(settlement);
 
         payerRepository.save(payer);
         settlementRepository.save(settlement);
