@@ -16,7 +16,6 @@ public class SettlementResponse {
         private Long settlementId;
     }
 
-    //바뀐 디자인에서 사용할지 안할지 모르겠음..
     @Builder
     @Getter
     @NoArgsConstructor
