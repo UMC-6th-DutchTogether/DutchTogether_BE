@@ -28,7 +28,7 @@ public class SettlementRestController {
         return ApiResponse.onSuccess(result);
     }
 
-    @PostMapping("/multi/")
+    @PostMapping("/multi")
     public ApiResponse<SettlementResponse.SettlementDTO> createMultiSettlement(@RequestBody SettlementRequest.SettlementPayerDTO request){
         SettlementResponse.SettlementDTO result = settlementCommandService.createMultipleSettlement(request);
         return ApiResponse.onSuccess(result);
