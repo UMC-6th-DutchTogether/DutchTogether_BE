@@ -36,7 +36,7 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
     private final ReceiptRepository receiptRepository;
 
     @Override
-    public SettlementResponse.SettlementDTO CreateSingleSettlement(SettlementRequest.SettlementDTO request) {
+    public SettlementResponse.SettlementDTO createSingleSettlement(SettlementRequest.SettlementDTO request) {
         Optional<Meeting> meeting = meetingRepository.findById(request.getMeetingNum());
         Receipt receipt = null;
         if (request.getReceiptId() != null) {
@@ -92,6 +92,11 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
         });
 
         return true;
+    }
+
+    @Override
+    public SettlementResponse.SettlementDTO createMultipleSettlement(SettlementRequest.SettlementIdDTO request) {
+        return null;
     }
 
 }

@@ -5,7 +5,9 @@ import com.umc.DutchTogether.domain.settlement.dto.SettlementResponse;
 
 public interface SettlementCommandService {
 
-    public SettlementResponse.SettlementDTO CreateSingleSettlement(SettlementRequest.SettlementDTO request);
+    public SettlementResponse.SettlementDTO createSingleSettlement(SettlementRequest.SettlementDTO request);
 
     public Boolean updateSettlement(SettlementRequest.SettlementInfoListDTO request);
+
+    public SettlementResponse.SettlementDTO createMultipleSettlement(SettlementRequest.SettlementIdDTO request);
 }
