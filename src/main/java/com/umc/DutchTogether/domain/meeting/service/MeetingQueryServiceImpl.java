@@ -42,7 +42,7 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
         Payer payer = payerRepository.findById(settlement.getPayer().getId()).orElse(null);
         Receipt receipt = null;
         if(settlement.getReceipt()!=null) {
-            receiptRepository.findById(settlement.getReceipt().getId()).orElse(null);
+            receipt = receiptRepository.findById(settlement.getReceipt().getId()).orElse(null);
         }
         return MeetingConverter.toSingleSettlementResultDTO(meeting, settlement, payer, receipt);
     }
