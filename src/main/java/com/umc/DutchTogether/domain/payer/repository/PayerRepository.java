@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface PayerRepository extends JpaRepository<Payer, Long> {
 
       List<Payer> findAllByName(String name);
+      Optional<Payer> findByName(String name);
 }

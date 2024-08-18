@@ -68,15 +68,15 @@ public class PayerCommandServiceImpl implements PayerCommandService{
         List<PayerResponse.PayerDTO> payerResponse = payers.stream()
                 .map(payerDTO->{
                     Payer payer = PayerConverter.toPayer(payerDTO);
-                    Optional<Payer> existPayer = checkPayer(payer,meetingNum);
-                    //결제자가 2명인 경우
-                    if (existPayer.isPresent()) {
-                        //정산하기만 추가적으로 생성, 결제자는 1명으로 유지
-                        createSettlement(existPayer.get(), request.getMeetingNum());
-                        return null;
-                    }
+//                    Optional<Payer> existPayer = checkPayer(payer,meetingNum);
+//                    //결제자가 2명인 경우
+//                    if (existPayer.isPresent()) {
+//                        //정산하기만 추가적으로 생성, 결제자는 1명으로 유지
+//                        createSettlement(existPayer.get(), request.getMeetingNum());
+//                        return null;
+//                    }
                     Payer savedPayer = saveNewPayer(payer);
-                    createSettlement(savedPayer,request.getMeetingNum());
+//                    createSettlement(savedPayer,request.getMeetingNum());
                     return PayerConverter.toPayerDTO(savedPayer);
                 })
                 .filter(Objects::nonNull) // null 값을 필터링하여 제거
@@ -84,13 +84,15 @@ public class PayerCommandServiceImpl implements PayerCommandService{
         return PayerConverter.payerListDTO(payerResponse);
     }
 
+    @Override
     //정산하기 생성 메소드
-    private void createSettlement(Payer payer, Long meetingNum) {
+    public Long createSettlement(Payer payer, Long meetingNum) {
         Meeting meeting = meetingRepository.findById(meetingNum)
                 .orElseThrow(() -> new MeetingHandler(MEETING_NOT_FOUND));
         Settlement settlement = SettlementConverter.toSettlement(payer,meeting);
         try {
             settlementRepository.save(settlement);
+            return settlement.getId();
         } catch (Exception e) {
             throw new RuntimeException("Settlement 저장에 실패 했습니다.", e);
         }

@@ -4,6 +4,7 @@ import com.umc.DutchTogether.domain.meeting.entity.Meeting;
 import com.umc.DutchTogether.domain.meeting.repository.MeetingRepository;
 import com.umc.DutchTogether.domain.payer.entity.Payer;
 import com.umc.DutchTogether.domain.payer.repository.PayerRepository;
+import com.umc.DutchTogether.domain.payer.service.PayerCommandService;
 import com.umc.DutchTogether.domain.receipt.entity.Receipt;
 import com.umc.DutchTogether.domain.receipt.repository.ReceiptRepository;
 import com.umc.DutchTogether.domain.settlement.converter.SettlementConverter;
@@ -14,6 +15,7 @@ import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
 import com.umc.DutchTogether.domain.settlementStatus.entity.SettlementStatus;
 import com.umc.DutchTogether.domain.settlementStatus.respoistory.SettlementStatusRepository;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.PayerHandler;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.MEETING_NOT_FOUND;
-import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.SETTLEMENT_NOT_FOUND_ID;
+import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
     private final PayerRepository payerRepository;
     private final SettlementStatusRepository settlementStatusRepository;
     private final ReceiptRepository receiptRepository;
-
+    private final PayerCommandService   payerCommandService;
     @Override
     public SettlementResponse.SettlementDTO createSingleSettlement(SettlementRequest.SettlementDTO request) {
         Meeting meeting = meetingRepository.findById(request.getMeetingNum())
@@ -85,8 +86,12 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
     }
 
     @Override
-    public SettlementResponse.SettlementDTO createMultipleSettlement(SettlementRequest.SettlementIdDTO request) {
-        return null;
+    public SettlementResponse.SettlementDTO createMultipleSettlement(SettlementRequest.SettlementPayerDTO request) {
+        String PayerName = request.getPayerName();
+        Payer payer = payerRepository.findByName(PayerName)
+                .orElseThrow(()-> new PayerHandler(PAYER_SERVER_ERROR));
+        Long settlementId = payerCommandService.createSettlement(payer, request.getMeetingNum());
+        return SettlementConverter.toSettlementDTO(settlementId);
     }
 
 }

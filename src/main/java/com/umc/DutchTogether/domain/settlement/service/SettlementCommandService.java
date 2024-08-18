@@ -9,5 +9,5 @@ public interface SettlementCommandService {
 
     public Boolean updateSettlement(SettlementRequest.SettlementInfoListDTO request);
 
-    public SettlementResponse.SettlementDTO createMultipleSettlement(SettlementRequest.SettlementIdDTO request);
+    public SettlementResponse.SettlementDTO createMultipleSettlement(SettlementRequest.SettlementPayerDTO request);
 }

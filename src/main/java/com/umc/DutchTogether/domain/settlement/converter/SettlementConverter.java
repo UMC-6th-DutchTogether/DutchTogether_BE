@@ -46,4 +46,10 @@ public class SettlementConverter {
                 .settlement(settlement)
                 .build();
     }
+
+    public static SettlementResponse.SettlementDTO toSettlementDTO(Long settlementId){
+        return SettlementResponse.SettlementDTO.builder()
+                .settlementId(settlementId)
+                .build();
+    }
 }

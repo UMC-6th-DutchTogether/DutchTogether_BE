@@ -79,7 +79,10 @@ public class SettlementRequest {
     @NoArgsConstructor
     @AllArgsConstructor
     @Schema(title = "여러명 정산하기 - 정산하기 테이블 생성 요청 DTO")
-    public static class SettlementIdDTO{
+    public static class SettlementPayerDTO{
+        @NotNull
         private String PayerName;
+        @NotNull
+        private Long meetingNum;
     }
 }
