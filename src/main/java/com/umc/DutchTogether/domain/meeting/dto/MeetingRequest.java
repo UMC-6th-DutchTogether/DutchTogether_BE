@@ -21,7 +21,7 @@ public class MeetingRequest {
     @Schema(title = "모임 생성 요청 DTO")
     public static class MeetingDT0{
         private String meetingId;
-        @ValidatePassword
+//        @ValidatePassword
         private String password;
     }
 
