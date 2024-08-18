@@ -81,7 +81,7 @@ public class SettlementRequest {
     @Schema(title = "여러명 정산하기 - 정산하기 테이블 생성 요청 DTO")
     public static class SettlementPayerDTO{
         @NotNull
-        private String PayerName;
+        private Long payerId;
         @NotNull
         private Long meetingNum;
     }

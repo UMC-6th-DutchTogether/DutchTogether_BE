@@ -87,8 +87,8 @@ public class SettlementCommandServiceImpl implements SettlementCommandService {
 
     @Override
     public SettlementResponse.SettlementDTO createMultipleSettlement(SettlementRequest.SettlementPayerDTO request) {
-        String PayerName = request.getPayerName();
-        Payer payer = payerRepository.findByName(PayerName)
+        Long payerId = request.getPayerId();
+        Payer payer = payerRepository.findById(payerId)
                 .orElseThrow(()-> new PayerHandler(PAYER_SERVER_ERROR));
         Long settlementId = payerCommandService.createSettlement(payer, request.getMeetingNum());
         return SettlementConverter.toSettlementDTO(settlementId);
