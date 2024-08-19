@@ -27,6 +27,7 @@ public enum ErrorStatus implements BaseErrorCode {
     SETTLEMENT_NOT_FOUND_BY_MEETING(HttpStatus.NOT_FOUND,"SETTLEMENT4004","해당 meeting 연결 된 settlement 없습니다."),
     SETTLEMENT_NOT_FOUND_BY_SETTLER(HttpStatus.NOT_FOUND,"SETTLEMENT4004","해당 settler 연결 된 settlement 없습니다."),
     SETTLEMENT_LIST_EMPTY(HttpStatus.NOT_FOUND,"SETTLEMENT4000","settlement list 가 비어있습니다."),
+    SETTLEMENT_NUM_PEOPLE_FORBIDDEN(HttpStatus.FORBIDDEN, "SETTLEMENT4003", "정산 인원이 0명입니다."),
 
     // 정산하기-정산자 관련에러
     SETTLEMENT_SETTLER_NOT_FOUND_BY_SETTLER(HttpStatus.NOT_FOUND,"SETTLEMENT_SETTLER4004","해당 settler 연결 된 settlement-settler 없습니다."),

@@ -48,7 +48,12 @@ public class PayerQueryServiceImpl implements PayerQueryService{
     @Override
     public PayerResponse.PayerInfoListDTO getPayerInfoListDTO(Long settlerId){
         List<Settlement> settlementList = getSettlementListBySettlerId(settlerId);
-        //IF 추가
+        // num_people이 0인 경우 예외를 던짐
+        boolean hasInvalidSettlement = settlementList.stream()
+                .anyMatch(settlement -> settlement.getNumPeople() == 0);
+        if (hasInvalidSettlement) {
+            throw new SettlementHandler(SETTLEMENT_NUM_PEOPLE_FORBIDDEN);
+        }
         List<PayerResponse.PayerInfoDTO> infoList= settlementList.stream()
                 .map(PayerConverter::toPayerInfoDTO)
                 .collect(Collectors.toList());

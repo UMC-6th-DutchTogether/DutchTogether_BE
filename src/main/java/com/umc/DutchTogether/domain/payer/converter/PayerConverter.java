@@ -36,9 +36,9 @@ public class PayerConverter {
 
     public static PayerResponse.PayerInfoDTO toPayerInfoDTO(Settlement settlement) {
         Payer payer = settlement.getPayer();
-
+        Float shareAmount = (float) settlement.getTotalAmount() / settlement.getNumPeople();
         return PayerResponse.PayerInfoDTO.builder()
-                .totalAmount(settlement.getTotalAmount())
+                .shareAmount(shareAmount)
                 .bank(payer.getBank())
                 .accountNum(payer.getAccountNum())
                 .name(payer.getName())
