@@ -61,6 +61,6 @@ public class SettlerQueryServiceImpl implements SettlerQueryService {
                 })
                 .collect(Collectors.toList());
 
-        return SettlerConverter.toSettlerResponseDTO(settlerList);
+        return SettlerConverter.toSettlerResponseDTO(settlerList, meeting.getName());
     }
 }

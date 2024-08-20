@@ -24,8 +24,9 @@ public class SettlerConverter {
                 .build();
     }
 
-    public static SettlerResponse.settlerResponseDTO toSettlerResponseDTO(List<SettlerResponse.settlerDTO> list) {
+    public static SettlerResponse.settlerResponseDTO toSettlerResponseDTO(List<SettlerResponse.settlerDTO> list, String meetingName) {
         return SettlerResponse.settlerResponseDTO.builder()
+                .meetingName(meetingName)
                 .settlers(list)
                 .build();
     }
