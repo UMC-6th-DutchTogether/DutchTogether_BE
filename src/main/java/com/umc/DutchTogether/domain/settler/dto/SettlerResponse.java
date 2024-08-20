@@ -16,6 +16,7 @@ public class SettlerResponse {
     @AllArgsConstructor
     @Schema(title = "정산자 리스트 응답 DTO")
     public static class settlerResponseDTO {
+        private String meetingName;
         private List<settlerDTO> settlers;
     }
 
