@@ -65,5 +65,6 @@ public class PayerResponse {
         private String bank;
         private Long accountNum;
         private Float shareAmount;
+        private Long settlementId;
     }
 }
