@@ -12,10 +12,13 @@ import com.umc.DutchTogether.domain.settlement.entity.Settlement;
 import com.umc.DutchTogether.domain.settlement.repository.SettlementRepository;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.MeetingHandler;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.PayerHandler;
+import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlementHandler;
 import com.umc.DutchTogether.global.apiPayload.exception.handler.SettlerHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.umc.DutchTogether.global.apiPayload.code.status.ErrorStatus.*;
 
@@ -30,9 +33,16 @@ public class MeetingQueryServiceImpl implements MeetingQueryService{
     private final ReceiptRepository receiptRepository;
 
     @Override
-    public Meeting getMeeting(Long meetingNum) {
-        return meetingRepository.findById(meetingNum)
+    public MeetingResponse.MeetingLinkResultDT0 getMeeting(Long meetingNum) {
+        Meeting meeting = meetingRepository.findById(meetingNum)
                 .orElseThrow(() -> new MeetingHandler(MEETING_NOT_FOUND));
+        boolean isSingle;
+        List<Settlement> settlements = settlementRepository.findAllByMeetingId(meetingNum);
+        if (settlements.isEmpty()) {
+            throw new SettlementHandler(SETTLEMENT_NOT_FOUND_BY_MEETING);
+        }
+        isSingle = settlements.size() == 1;
+        return MeetingConverter.toMeetingLinkResultDTO(meeting,isSingle);
     }
 
     @Override
