@@ -42,6 +42,7 @@ public class PayerConverter {
                 .bank(payer.getBank())
                 .accountNum(payer.getAccountNum())
                 .name(payer.getName())
+                .settlementId(settlement.getId())
                 .build();
     }
 
