@@ -34,8 +34,8 @@ public class MeetingRestController {
 
     @GetMapping("/{meetingNum}/link")
     public ApiResponse<MeetingResponse.MeetingLinkResultDT0> getMeetingLink(@ExistMeeting @PathVariable Long meetingNum) {
-        Meeting meeting = meetingQueryService.getMeeting(meetingNum);
-        return ApiResponse.onSuccess(MeetingConverter.toMeetingLinkResultDTO(meeting));
+        MeetingResponse.MeetingLinkResultDT0 result = meetingQueryService.getMeeting(meetingNum);
+        return ApiResponse.onSuccess(result);
     }
 
     @GetMapping("/{link}")

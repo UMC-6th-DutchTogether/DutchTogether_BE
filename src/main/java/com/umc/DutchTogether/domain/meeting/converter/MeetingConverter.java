@@ -25,14 +25,18 @@ public class MeetingConverter {
                 .build();
     }
 
-    public static MeetingResponse.MeetingLinkResultDT0 toMeetingLinkResultDTO(Meeting meeting) {
-        String domain = "http://www.dutchtogether.com/";
-
-        if (meeting == null) {
-            return null;
+    public static MeetingResponse.MeetingLinkResultDT0 toMeetingLinkResultDTO(Meeting meeting,boolean isSingle) {
+        String singleDomain = "http://www.dutchtogether.com/";
+        String multipleDomain = "http://www.dutchtogether.com/multi/";
+        String domain;
+        if (isSingle) {
+            domain = singleDomain +  meeting.getLink();
+        }
+        else{
+            domain = multipleDomain +  meeting.getLink();
         }
         return MeetingResponse.MeetingLinkResultDT0.builder()
-                .meetingLink(domain + meeting.getLink())
+                .meetingLink(domain)
                 .build();
     }
 
