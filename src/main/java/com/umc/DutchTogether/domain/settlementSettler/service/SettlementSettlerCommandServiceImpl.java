@@ -43,8 +43,8 @@ public class SettlementSettlerCommandServiceImpl implements SettlementSettlerCom
                 .orElseGet(() -> SettlementSettler.builder()
                         .settlement(settlement)
                         .settler(settler)
-                        .status(Status.COMPLETED)
                         .build());
+        settlementSettler.setStatus(Status.COMPLETED);
         settlementSettlerRepository.save(settlementSettler);
         return SettlementSettlerConverter.toSettlementSettlerResultDTO(settlementSettler);
     }
