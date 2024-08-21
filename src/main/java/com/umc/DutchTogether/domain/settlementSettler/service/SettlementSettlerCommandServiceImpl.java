@@ -38,14 +38,20 @@ public class SettlementSettlerCommandServiceImpl implements SettlementSettlerCom
                         .name(request.getSettlerName())
                         .build()));
 
-        // settlement와 settler로 새로운 SettlementSettler 객체 생성
         SettlementSettler settlementSettler = settlementSettlerRepository.findBySettlementAndSettler(settlement, settler)
-                .orElseGet(() -> SettlementSettler.builder()
-                        .settlement(settlement)
-                        .settler(settler)
-                        .status(Status.COMPLETED)
-                        .build());
-        settlementSettlerRepository.save(settlementSettler);
+                .orElse(null);
+
+        if (settlementSettler == null) {
+            settlementSettler = SettlementSettler.builder()
+                    .settlement(settlement)
+                    .settler(settler)
+                    .status(Status.COMPLETED)  // 생성 시에만 상태를 설정
+                    .build();
+            settlementSettlerRepository.save(settlementSettler);
+        } else {
+            settlementSettler.setStatus(Status.COMPLETED);
+        }
+
         return SettlementSettlerConverter.toSettlementSettlerResultDTO(settlementSettler);
     }
 }
