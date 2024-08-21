@@ -56,7 +56,6 @@ public class SettlementStatusCommandServiceImpl implements SettlementStatusComma
 
     @Override
     public Boolean addSettler(SettlementStatusRequest.settlerInfo settlerInfo) {
-
         //정산현황 테이블
         SettlementStatus settlementStatus = settlementStatusRepository.findBySettlementId(settlerInfo.getSettlementId())
                 .orElseThrow(() -> new SettlementStatusHandler(SETTLEMENT_STATUS_NOT_FOUND));
@@ -69,7 +68,6 @@ public class SettlementStatusCommandServiceImpl implements SettlementStatusComma
 
         settlementSettler.setStatus(Status.COMPLETED);
         settlementSettlerRepository.save(settlementSettler);
-
         return true;
     }
 
