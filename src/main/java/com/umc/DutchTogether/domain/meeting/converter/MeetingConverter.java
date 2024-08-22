@@ -26,8 +26,8 @@ public class MeetingConverter {
     }
 
     public static MeetingResponse.MeetingLinkResultDT0 toMeetingLinkResultDTO(Meeting meeting,boolean isSingle) {
-        String singleDomain = "http://www.dutchtogether.com/";
-        String multipleDomain = "http://www.dutchtogether.com/multi/";
+        String singleDomain = "https://www.dutchtogether.com/";
+        String multipleDomain = "https://www.dutchtogether.com/multi/";
         String domain;
         if (isSingle) {
             domain = singleDomain +  meeting.getLink();
